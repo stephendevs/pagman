@@ -1,0 +1,29 @@
+{
+    "name": "stephendevs/lpage",
+    "description" : "Laravel package for managing wesite pages",
+    "type" : "project",
+    "licence" : "MIT",
+    "authors" : [
+        {
+            "name" : "Okello Stephen Omoding",
+            "email" : "okellostephenomoding@outlook.com"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "autoload": {
+        "psr-4": {
+            "Stephendevs\\Lpage\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Stephendevs\\Lpage\\Providers\\LpageServiceProvider"
+            ]
+        }
+    },
+    "require": {}
+}
