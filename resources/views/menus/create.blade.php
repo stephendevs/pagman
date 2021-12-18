@@ -1,4 +1,4 @@
-@extends(config('lpage.master_layout', 'lpage::core.layouts.master'))
+@extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
 @section('pageheading', 'Page Manager | Create Navogation Menu')
     

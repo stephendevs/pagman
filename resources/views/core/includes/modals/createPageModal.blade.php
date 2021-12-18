@@ -1,6 +1,6 @@
-<!-- Modal -->
-<div class="modal fade" id="createPageModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Create Page Modal -->
+<div class="modal fade" id="createPageModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create Page</h5>
@@ -8,21 +8,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
             </div>
-           <form action="{{ route('lpagePageStore') }}" method="POST">
+           <form action="{{ route('pagmanPageStore') }}" method="POST" class="create-page-modal-form">
             @csrf
             <div class="modal-body row">
                 
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="name">{{ __('Name') }}</label>
-                        <input type="text" class="form-control" name="name"  id="title" placeholder="Page Name" value="{{ old('name') }}"   />
-                        <small class="error text-danger error-name"">
-                            {{ $errors->first('name') }}
-                        </small>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
+                <!-- Page Title -->
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="title">{{ __('Title') }}</label>
                         <input type="text" class="title form-control" name="title"  id="title" placeholder="Page Title" value="{{ old('title') }}"   />
@@ -32,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group mb-0">
                         <label for="pageSlug">{{ __('Slug') }}</label>
                         <input type="text" class="page-slug form-control" name="slug"  id="pageSlug" placeholder="Page Slug" value="{{ old('slug') }}"  />
@@ -42,9 +33,9 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group mb-0">
-                        <label for="pageSlug">{{ __('Slug') }}</label>
+                        <label for="pageSlug">{{ __('URL') }}</label>
                         <input type="url" class="form-control" name="url"  id="url" placeholder="Page Url" value="{{ (old('slug')) ? old('url') : url('/') }}"  />
                         <small class="error text-danger error-url">
                             {{ $errors->first('url') }}
@@ -52,36 +43,38 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 mt-3">
-                    <label for="parentOrChild">{{ 'Parent Or Child Page' }}</label>
-                    <select name="parent_child" id="parentOrChild" class="form-control">
-                        <option value="1">Is Parent Page</option>
-                        <option value="2">Is Child Page</option>
-                    </select>
-                </div>
-
-                <div class="form-group mt-3 col-lg-6 collapse" id="parentPageCollapse">
-                    <label for="parentPage">{{ __('Select Parent Page') }}</label>
-                    <select name="parent_id" id="parentPage" class="form-control"">
-                        @if (count($pages))
+                <div class="col-lg-12 mt-3">
+                    <label for="parentPage">{{ 'Select Parent Page' }}</label>
+                    @if (count($pages))
+                        <select name="parent_page" id="" class="form-control">
+                            <option value="0" selected>--no parent page--</option>
                             @foreach ($pages as $page)
                                 <option value="{{ $page->id }}">{{ $page->name }}</option>
                             @endforeach
-                        @else
-                        <option value="0">No Pages Available</option>
-
-                        @endif
+                        </select>
+                    @else
+                    <select name="parent_page" id="" class="form-control">
+                        <option value="0" selected>No Pages</option>
                     </select>
-                    <small class="error text-danger error-page-slug"">
-                        hello
-                    </small>
+                    @endif
                 </div>
+
+                <div class="col-lg-12 mt-3">
+                    <div class="alert alert-success d-none"></div>
+                </div>
+
+                <div class="col-lg-12 mt-3">
+                    <div class="alert alert-danger d-none"></div>
+                </div>
+                
+
+
 
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-primary">Add New Page</button>
             </div>
            </form>
         </div>

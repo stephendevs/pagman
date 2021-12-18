@@ -16,7 +16,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <a href="{{ route('lpagePageDestroy', ['id' => $page->id]) }}" class="btn btn-danger btn-sm">Continue</a>
+                <a href="{{ route('pagmanPageDestroy', ['id' => $page->id]) }}" class="btn btn-danger btn-sm">Continue</a>
             </div>
         </div>
     </div>

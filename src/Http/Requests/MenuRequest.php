@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephendevs\Lpage\Http\Requests;
+namespace Stephendevs\Pagman\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

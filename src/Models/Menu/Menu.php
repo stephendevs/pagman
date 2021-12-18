@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephendevs\Lpage\Models\Menu;
+namespace Stephendevs\Pagman\Models\Menu;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,16 +8,72 @@ class Menu extends Model
 {
     protected $table = 'menus';
 
-    protected $guarded = [];
-
-    protected $casts = [
-        'is_primary' => 'boolean',
-        'footer' => 'boolean'
+    protected $cast = [
+        'menu_cache' => 'array'
     ];
 
-    public function pages()
+
+    public function scopeFindMenu($query, $column, $value)
     {
-        return $this->belongsToMany('Stephendevs\Lpage\Models\Page\Page', 'menu_items');
+        return $query
+        ->where($column, $value);
     }
+
+
+    public function scopeFindMenuItems($query, $menu_name)
+    {
+        return $query->with(['menuItems' => function($q){
+            $q->with(['children'])->whereNull('parent_id')->orderBy('item_order', 'asc');
+        }])
+        ->where('name', $menu_name);
+    }
+
+    public function scopeTestFindMenuItems($query, $menu_name)
+    {
+        return $query->with(['menuItems' => function($q){
+            $q->with(['children' => function($qr){
+                $qr->with(['children']);
+            }])->whereNull('parent_id')->orderBy('item_order', 'asc');
+        }])
+        ->where('name', $menu_name);
+    }
+
+
+
+
+    public function scopeGetMenuByName($query, $name)
+    {
+        return $query
+        ->where('name', $name);
+    }
+    
+    public function scopeGetMdenuItems($query, $menu_name)
+    {
+        return $query->with(['items' => function($q){
+            $q->orderBy('menu_item.item_order', 'asc')->get();
+        }])
+        ->where('name', $menu_name);
+    }
+
+    public function scopeGetMenuItems($query, $menu_name)
+    {
+        return $query->with(['menuItems' => function($q){
+            $q->with(['children'])->whereNull('parent_id')->orderBy('item_order', 'asc');
+        }])
+        ->where('name', $menu_name);
+    }
+
+
+    public function getMenuCacheAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+
+    public function menuItems()
+    {
+        return $this->hasMany('Stephendevs\Pagman\Models\Menu\MenuItem');
+    }
+
 
 }

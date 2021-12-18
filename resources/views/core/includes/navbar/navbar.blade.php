@@ -1,8 +1,11 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg shadow-sm">
     <div class="container">
 
         <div class="navbar-brand-wrapper navbar-brand-container" id="navbarBrandWrapper">
-            <a href="" class="navbar-brand navbar-brand-image" id="navbarBrandImage">
+            <a href="" class="navbar-brand">
+                Pagman
+            </a>
+            <a href="" class="navbar-brand navbar-brand-image d-none" id="navbarBrandImage">
               <img src="{{ asset('storage/lpage/favicon.png') }}" alt="Pacoss Logo" class="img-fluid" />
             </a>
         </div>
@@ -15,7 +18,7 @@
         <div id="navbarSupportedContent" class="collapse navbar-collapse">
             <ul class="navbar-nav navbar-nav-default ml-auto" id="navbarNavDefault">
               <!-- Link Home -->
-              <li class="nav-item"><a href="{{ route('lpagePages') }}" class="nav-link">{{ __('Pages') }}</a></li>
+              <li class="nav-item"><a href="{{ route('pagmanPages') }}" class="nav-link">{{ __('Pages') }}</a></li>
 
             </div>
         </div>

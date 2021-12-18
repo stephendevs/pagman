@@ -1,17 +1,18 @@
 <?php
 
-namespace Stephendevs\Lpage\Http\Controllers\Page;
+namespace Stephendevs\Pagman\Http\Controllers\Page;
 
-use Stephendevs\Lpage\Http\Controllers\Controller;
+use Stephendevs\Pagman\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Stephendevs\Lpage\Http\Requests\PageRequest;
+
+use Stephendevs\Pagman\Http\Requests\PageRequest;
 
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 
-use Stephendevs\Lpage\Models\Page\Page;
-use Stephendevs\Lpage\Models\Menu\Menu;
+use Stephendevs\Pagman\Models\Page\Page;
+use Stephendevs\Pagman\Models\Menu\Menu;
 
 class PageController extends Controller
 {
@@ -24,7 +25,7 @@ class PageController extends Controller
     public function index()
     {
         $pages = Page::all();
-        return view('lpage::page.index', compact(['pages']));
+        return view('pagman::page.index', compact(['pages']));
     }
      /**
      * Show the form for creating a new resource.
@@ -34,7 +35,7 @@ class PageController extends Controller
     public function create()
     {
         $pages = Page::all();
-        return view('lpage::page.create', compact(['pages']));
+        return view('pagman::page.create', compact(['pages']));
     }
 
     /**
@@ -48,22 +49,22 @@ class PageController extends Controller
         $data = $request->validated();
 
         $page = new Page();
-        $page->name = $request->name;
         $page->title = $request->title;
         $page->slug = $request->slug;
         $page->url = $request->url;
-
-        if($request->parent_child == '2'){
-            $page->is_child = '1';
-            $page->is_parent = '0';
-            $page->parent_id = $request->parent_id;
-        }else{
-            $page->is_parent = '1';
-            $page->is_child = '0';
-            $page->parent_id = '0';
-        }
+        $page->content = $request->content;
+        $page->description = $request->description;
+        $page->parent_page_id = $request->parent_page;
 
         $page->save();
+
+        if ($request->has('ajax')) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Page Created Successfully',
+                'url' => route('pagmanPageShow', ['id' => $page->id])
+            ], 200);
+        }
 
         return back()->withInput()->with('success', 'Page Created Successfully');
     }
@@ -71,9 +72,8 @@ class PageController extends Controller
     public function show($id)
     {
         $page = Page::with(['menus'])->findOrFail($id);
-        $children = Page::where('parent_id', $id)->get();
-        //return $page;
-        return view('lpage::page.show', compact(['page', 'children']));
+        $otherPages = Page::where('id', '!=', $id)->get();
+        return view('pagman::page.show', compact(['page', 'otherPages']));
     }
 
      /**
@@ -85,13 +85,12 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::findOrfail($id);
-        $pages = Page::where('id', '!=', $id)->get();
-        return view('lpage::page.edit', compact(['page', 'pages']));
+        $otherPages = Page::where('id', '!=', $id)->get();
+        return view('pagman::page.edit', compact(['page', 'otherPages']));
     }
 
     public function update(Request $request, $id)
     {
-
 
         return back()->withInput()->with('success', 'Updated Successfully');
     }

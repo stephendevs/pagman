@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephendevs\Lpage\Models\Page;
+namespace Stephendevs\Pagman\Models\Page;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +9,8 @@ class Page extends Model
 {
 
    protected $table = 'pages';
+   protected $guarded = [];
+   
 
    protected $casts = [
        'is_parent' => 'boolean',
@@ -16,13 +18,13 @@ class Page extends Model
        'published' => 'boolean'
    ];
 
-   public function getNameAttribute($value)
+   public function getTitleAttribute($value)
    {
        return ucwords($value);
    }
 
    public function menus()
    {
-       return $this->belongsToMany('Stephendevs\Lpage\Models\Menu\Menu', 'menu_items');
+       return $this->belongsToMany('Stephendevs\Pagman\Models\Menu\Menu', 'menu_items');
    }
 }

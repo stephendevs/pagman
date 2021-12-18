@@ -1,38 +1,39 @@
 <?php
 
-namespace Stephendevs\Lpage\Http\Controllers\Menu;
+namespace Stephendevs\Pagman\Http\Controllers\Menu;
 
-use Stephendevs\Lpage\Http\Controllers\Controller;
+use Stephendevs\Pagman\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Stephendevs\Lpage\Http\Requests\MenuRequest;
+use Stephendevs\Pagman\Http\Requests\MenuRequest;
 
-use Stephendevs\Lpage\Models\Menu\Menu;
+use Stephendevs\Pagman\Models\Menu\Menu;
+use Stephendevs\Pagman\Models\Menu\MenuItem;
+use Stephendevs\Pagman\MenuOrganiser;
 
 class MenuController extends Controller
 {
+    use MenuOrganiser;
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of all menu items for specific menu.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($menu)
     {
-        $menus = Menu::all();
-        return view('lpage::menu.index', compact(['menus']));
+        $menu = Menu::testFindMenuItems($menu)->firstOrFail();
+        return view('pagman::menus.index', compact(['menu']));
     }
 
-
-  
-
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new nav menu.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('lpage::navbar.menus.index');
+        return view('pagman::navbar.menus.index');
     }
 
     /**
@@ -47,36 +48,31 @@ class MenuController extends Controller
 
         $menu = new Menu();
         $menu->name = $request->name;
-        $this->convertPrimaryMenusToNotPrimary($request);
-        $this->convertFooterMenusToNotFooter($request);
-        ($request->has('is_primary')) ? $menu->is_primary = '1' : $menu->is_primary = '0';
-        ($request->has('footer')) ? $menu->footer = '1' : $menu->footer = '0';
         $menu->save();
 
-        if($request->has('ajax')){
+        if($request->ajax()){
             return response()->json([
                 'success' => true,
                 'message' => 'Menu Created Successfully',
             ], 200);
         }
-
         return back()->withInput()->with('success', 'Menu Created Successfully');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified menu and its items.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($name)
     {
-        $menu = Menu::with(['pages'])->findOrFail($id);
-        return view('lpage::menu.show', compact(['menu']));
+        $menu = Menu::getMenuItems($name)->firstOrFail();
+        return view('pagman::menus.show', compact(['menu']));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified menu.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -84,7 +80,7 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::findOrfail($id);
-        return view('lpage::menu.edit', compact(['menu']));
+        return view('pagman::menu.edit', compact(['menu']));
     }
 
     /**

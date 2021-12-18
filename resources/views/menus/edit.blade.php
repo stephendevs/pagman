@@ -1,7 +1,7 @@
-@extends(config('lpage.master_layout', 'lpage::core.layouts.master'))
+@extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
 @section('pageHeading')
-    {{ 'Menu | '.$menu->name }}
+    {{ 'Edit Menu | '.$menu->name }}
 @endSection
 
 @section('pageActions')
@@ -11,6 +11,7 @@
     <a href="{{ route('lpageMenuCreate') }}" class="btn btn-sm" data-toggle="modal" data-target="#createMenuModal"><i class="fa fa-fw fa-list"></i><i class="fa fa-plus-square-o"></i> Create Menu</a>
     <a href="{{ route('lpagePages') }}" class="btn btn-sm"><i class="fa fa-fw fa-folder"></i>Pages</a>
 @endsection
+    
     
 @section('content')
     <section class="page-section mt-4">
@@ -61,18 +62,21 @@
                   </div>
                 </div>
 
+                <div class="col-lg-4 mb-1">
+                  <div class="card">
+                    <div class="card-body p-2">
+                      page
+                    </div>
+                  </div>
+                </div>
 
-                @if (count($menu->pages))
-                    @foreach ($menu->pages as $page)
-                      <div class="col-lg-4 mb-1">
-                        <div class="card">
-                          <div class="card-body p-2">
-                            {{ $page->name }}
-                          </div>
-                        </div>
-                      </div>
-                    @endforeach
-                @endif
+                <div class="col-lg-4 mb-1">
+                  <div class="card">
+                    <div class="card-body p-2">
+                      page
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -80,7 +84,7 @@
           </div>
         </div>
     </section>
-
     @includeIf('lpage::core.includes.modals.createMenuModal', ['some' => 'data'])
+
 
 @endsection

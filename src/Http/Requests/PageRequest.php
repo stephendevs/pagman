@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephendevs\Lpage\Http\Requests;
+namespace Stephendevs\Pagman\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,11 +24,18 @@ class PageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:pages,name',
             'title' => 'required|unique:pages,title',
             'slug' => 'required|unique:pages,slug',
             'url' => 'nullable|url',
-            'parent_child' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Please provide page title',
+            'title.unique' => 'There is already a page with this title',
+            'slug.required' => 'Please provide page slug',
         ];
     }
 }

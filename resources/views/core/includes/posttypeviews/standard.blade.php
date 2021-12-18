@@ -1,0 +1,1 @@
+<textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="content">hello</textarea>

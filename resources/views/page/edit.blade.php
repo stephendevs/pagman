@@ -1,15 +1,17 @@
-@extends(config('lpage.master_layout', 'lpage::core.layouts.master'))
+@extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
-@section('pageHeading', 'Edit Page: '.$page->name)
+@section('title', 'Pagman | Edit Page')
+@section('pageHeading', 'Edit Page')
 
 @section('pageActions')
-    <a href="{{ route('lpageManager') }}" class="btn btn-sm"><i class="fa fa-fw fa-home"></i>Page Manger</a>
-    <a href="{{ route('lpagePages') }}" class="btn btn-sm"><i class="fa fa-fw fa-folder"></i>Pages</a>
-    <a href="{{ route('lpagePageCreate') }}"  class="btn btn-sm"><i class="fa fa-fw fa-plus"></i>Create Page</a>
+    <a href="{{ route('pagman') }}" class="btn btn-sm"><i class="fa fa-fw fa-home"></i>Page Manger</a>
+    <a href="{{ route('pagmanPages') }}" class="btn btn-sm"><i class="fa fa-fw fa-folder"></i>Pages</a>
+    <a href="{{ route('pagmanPageCreate') }}"  class="btn btn-sm"><i class="fa fa-fw fa-plus"></i>Create Page</a>
 @endsection
 
 @section('requiredJs')
-    <script src="{{ asset('lpage/js/page/page.js') }}" defer></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+    <script src="{{ asset('stephendevs/pagman/js/page/page.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -18,15 +20,8 @@
         <div class="container-fluid">
             <div class="row">
                 
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="card-title">{{ __('Edit Page') }}</h6>
-                        </div>
-                        <div class="card-body">
-                            @includeIf('lpage::core.includes.forms.editPageForm', ['some' => 'data'])
-                        </div>
-                    </div>
+                <div class="col-lg-12">
+                    @includeIf('pagman::core.includes.forms.editPageForm', ['some' => 'data'])
                 </div>
             </div>
         </div>

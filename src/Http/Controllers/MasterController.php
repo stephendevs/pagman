@@ -1,14 +1,17 @@
 <?php
 
-namespace Stephendevs\Lpage\Http\Controllers;
+namespace Stephendevs\Pagman\Http\Controllers;
 
-use Stephendevs\Lpage\Http\Controllers\Controller;
+use Stephendevs\Pagman\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 
-use Stephendevs\Lpage\Models\Page\Page;
+use Stephendevs\Pagman\Models\Page\Page;
+
+use Stephendevs\Pagman\Models\Menu\Menu;
+use Stephendevs\Pagman\Models\Menu\MenuItem;
 
 class MasterController extends Controller
 {
@@ -16,23 +19,32 @@ class MasterController extends Controller
 
     public function index()
     {
-
-        $pages = config('pacoss.pages');
-    return view('lpage::index', compact(['pages']));
+        //return Menu::all();
+        return view('pagman::index');
     }
 
-    public function syncSplPages()
+    public function syncMenuItems()
     {
-        $splpages = (filled(config('lpage.splpages', []))) ? config('lpage.splpages', []) : [];
-        if (count($splpages)) {
-           for ($i=0; $i < count($splpages); $i++) {
-               return url($splpages[$i]['route']);
-           }
+        //find main menu
+        $menu = Menu::findMenu('name', config('web.main_menu', 'main'))->first();
+
+        
+
+        //get menuitems from config
+        $menuitems = config('web.menu_items', []);
+
+        if(count($menuitems)){
+            foreach($menuitems as $index => $value){
+                MenuItem::firstOrCreate([
+                    'name' => $index,
+                    'url' => url($value),
+                    'menu_id' => $menu->id
+                ]);
+            }
         }else{
-            return 'spl pages not defined';
+            //no menu items to syn
         }
-
-
-        return $splpages;
+        return back();
     }
+
 }

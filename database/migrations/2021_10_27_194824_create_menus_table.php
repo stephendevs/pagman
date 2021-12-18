@@ -16,8 +16,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->enum('is_primary',['0','1'])->default('0');
-            $table->enum('footer',['0','1'])->default('0');
+            $table->text('menu_cache')->nullable();
             $table->timestamps();
         });
     }

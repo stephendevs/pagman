@@ -7,9 +7,9 @@
   <div id="pageManagerMenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded">
       <h6 class="collapse-header">Manage Pages:</h6>
-      <a class="collapse-item" href="{{ route('lpageManager') }}">{{ __('Page Manager') }}</a>
-      <a class="collapse-item" href="{{ route('lpageMenus') }}">{{ __('Menus') }}</a>
-      <a class="collapse-item" href="{{ route('lpagePages') }}">{{ __('Pages') }}</a>
+      <a class="collapse-item" href="{{ route('pagman') }}">{{ __('Page Manager') }}</a>
+      <a class="collapse-item" href="{{ route('pagman.menus') }}">{{ __('Menus') }}</a>
+      <a class="collapse-item" href="{{ route('pagmanPages') }}">{{ __('Pages') }}</a>
     </div>
   </div>
 </li>
