@@ -77,7 +77,7 @@ return [
     'user_model' => 'Stephendevs\Lad\Models\Admin\Admin',
 
     'standard_post_types' => [
-        'news', 'blog'
+        'news', 'blog', 'page'
     ],
 
     'post_types' => [

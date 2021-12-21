@@ -116,6 +116,52 @@
 
     });
 
+    //Create Standard Post Form
+    $('#editStandardPostForm').submit(function(e){
+        e.preventDefault();
+
+        //Validation Error Holders
+        let postTitleError = $(this).find('.post-title-error');
+        let postExtractTextError = $(this).find('.post-extract-error');
+        let featuredImageError = $(this).find('.featured-image-error');
+
+        let successMsg = $(this).find('.success');
+        let failedMsg = $(this).find('.error');
+
+
+        let data = new FormData(this);
+
+        $.ajax({
+            type : $(this).attr('method'),
+            url : $(this).attr('action'),
+            data : data,
+            contentType: false,
+            processData: false,
+            cache: false,
+            success : function(response){
+                if(response.success != undefined && response.success == true){
+                    postTitleError.text('');
+                    postExtractTextError.text('');
+                    featuredImageError.text('');
+                    failedMsg.text('');
+                    (response.message != undefined) ? successMsg.text(response.message) : successMsg.text('');
+                }
+            },
+            statusCode : {
+                500 : function(){
+                    failedMsg.text('Internal Server Error');
+                },
+                422 : function(response){
+                    //displaying validation errors on the error holders
+                    (response.responseJSON.errors.post_title != undefined) ? postTitleError.text(response.responseJSON.errors.post_title) : postTitleError.text('');
+                    (response.responseJSON.errors.post_featured_image != undefined) ? featuredImageError.text(response.responseJSON.errors.post_featured_image) : featuredImageError.text('');
+                    (response.responseJSON.errors.extract_text != undefined) ? postExtractTextError.text(response.responseJSON.errors.extract_text) : postExtractTextError.text('');
+                }
+            }
+           });
+
+    });
+
     CKEDITOR.replace('content');
 
   

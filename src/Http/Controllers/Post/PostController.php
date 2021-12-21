@@ -16,9 +16,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($posttype = null)
     {
-        $posts = Post::with('author')->paginate(10);
+        $posts = Post::with('author')->posts($posttype, true, 4);
         return view('pagman::posts.index', compact(['posts']));
     }
      /**
@@ -66,8 +66,8 @@ class PostController extends Controller
 
     public function show($id)
     {
-        return $post = Post::with('author:id,username')->findPost('id', $id)->firstOrFail();
-        return view('pagman::post.show', compact(['post']));
+        $post = Post::with('author:id,username')->findPost('id', $id)->firstOrFail();
+        return view('pagman::posts.edit', compact(['post']));
     }
 
      /**
@@ -78,12 +78,33 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-       return  $post = Page::with('auhtor:id,username')->findPost('id', $id)->firstOrFail();
-        return view('pagman::page.edit', compact(['post']));
+        $post = Post::with('author:id,username')->findPost('id', $id)->firstOrFail();
+        return view('pagman::posts.edit', compact(['post']));
     }
 
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
+        $request->validated();
+        $post = Post::with('author:id,username')->findPost('id', $id)->firstOrFail();
+
+        $post->post_name = $request->post_title;
+        $post->extract_text = $request->extract_text;
+        $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
+        $post->post_type = $request->post_type;
+
+        //dertermine if request has file
+        $post->post_featured_image = ($request->hasFile('post_featured_image')) ? request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
+
+
+        $post->save();
+
+        //response for ajax
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Editted Successfully',
+            ], 200);
+        }
 
         return back()->withInput()->with('success', 'Updated Successfully');
     }
@@ -98,14 +119,6 @@ class PostController extends Controller
     {
         Post::destroy($id);
         return back()->with('success', 'Post deleted successfully');
-    }
-
-
-    public function menu()
-    {
-        $menus = Menu::with(['pages'])->get();
-        $pages = Page::with(['menus'])->get();
-        return response()->json(['pages' => $pages]);
     }
 
 }

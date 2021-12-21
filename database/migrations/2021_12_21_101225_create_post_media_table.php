@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreatePostMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('post_media', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('post_name')->unique();
-            $table->string('post_title');
-            $table->string('post_type');
-            $table->text('extract_text')->nullable();
-            $table->text('post_content')->nullable();
+            $table->text('media');
             $table->string('mime_type')->nullable();
-            $table->text('post_featured_image')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();
-
-            $table->foreign('author_id')->references('id')->on(config('pagman.user_table', 'admins'))->onDelete('cascade');
             $table->timestamps();
+            $table->foreign('author_id')->references('id')->on(config('pagman.user_table', 'admins'))->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+
         });
     }
 
@@ -36,6 +32,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('post_media');
     }
 }

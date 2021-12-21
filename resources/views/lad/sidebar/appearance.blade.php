@@ -1,7 +1,7 @@
 <!-- -->
-<li class="nav-item">
+<li class="nav-item sidebar-nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pageManagerMenu" aria-expanded="true" aria-controls="pageManagerMenu">
-      <i class="fa fa-television"></i>
+      <i class="fa fa-television sidebar-icon"></i>
       <span>Appearance</span>
     </a>
     <div id="pageManagerMenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

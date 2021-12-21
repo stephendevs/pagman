@@ -9,6 +9,10 @@ class Post extends Model
 {
 
 
+    protected $fillable = [
+        'post_name', 'post_type', 'post_content', 'post_featured_image', 'extract_text'
+    ];
+    
     protected $with = ['author:id,username'];
     
     public function scopeFindPost($query, $column, $value)
@@ -18,27 +22,28 @@ class Post extends Model
     }
 
     //Retrieve posts of a specific type
-    public function scopePosts($query, $type, $paginated, $count)
+    public function scopePosts($query, $type = null, $paginated = false, $count = 4)
     {
         if($paginated){
-            if($type == 'all'){
+            if($type != null){
                 return $query
+                ->where('post_type', $type)
                 ->paginate($count);
             }else{
                 return $query
-                ->where('post_type', $type)
                 ->paginate($count);
             }
         }else{
-            if($type == 'all'){
-                return $query
-                ->get();
-            }else{
+            if($type != null){
                 return $query
                 ->where('post_type', $type)
                 ->get();
+            }else{
+                return $query
+                ->get();
             }
         }
+        
     }
 
 
@@ -80,5 +85,10 @@ class Post extends Model
    public function author()
    {
        return $this->belongsTo(config('pagman.user_model', 'Stephendevs\Lad\Models\Admin\Admin'));
+   }
+
+   public function media()
+   {
+        return $this->hasMany('Stephendevs\Pagman\Models\Post\PostMedia');
    }
 }

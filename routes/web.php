@@ -58,13 +58,14 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::get('/test', [TestController::class, 'index'])->name('test');
 
         Route::get('/posts', [PostController::class, 'index'])->name('pagman.posts');
+        Route::get('/posts/posttype/{posttype?}', [PostController::class, 'index'])->name('pagman.posts.posttype');
         Route::get('/posts/create/{posttype?}', [PostController::class, 'create'])->name('pagman.posts.create');
         Route::post('/posts/create', [PostController::class, 'store'])->name('pagman.posts.store');
-
-        Route::get('/posts/{id}', [PostController::class, 'show'])->name('pagman.posts.show');
-        Route::get('/posts/trash/{id}', [PostController::class, 'destroy'])->name('pagman.posts.trash');
+        Route::get('/posts/{id}', [PostController::class, 'edit'])->name('pagman.posts.show');
         Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('pagman.posts.edit');
         Route::post('/posts/edit/{id}', [PostController::class, 'update'])->name('pagman.posts.update');
+        Route::get('/posts/trash/{id}', [PostController::class, 'destroy'])->name('pagman.posts.destroy');
+        
 
         Route::get('/poststype/view/{view}', [PostTypeViewController::class, 'index'])->name('pagman.posttypeview');
 

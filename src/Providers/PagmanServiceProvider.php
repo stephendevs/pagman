@@ -5,6 +5,9 @@ namespace Stephendevs\Pagman\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
+use  Stephendevs\Pagman\Console\Commands\PostSeederCommand;
+use  Stephendevs\Pagman\Console\Commands\PagmanSeederCommand;
+
 
 class PagmanServiceProvider extends ServiceProvider
 {
@@ -37,6 +40,10 @@ class PagmanServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
 
         if ($this->app->runningInConsole()) {
+
+            $this->commands([
+               PostSeederCommand::class, PagmanSeederCommand::class,
+            ]);
 
             //config file
             $this->publishes([
