@@ -160,7 +160,7 @@
                 <div class="card shadow-sm mb-3">
                     <div class="card-body">
                         <label for="title">Post Title</label>
-                        <textarea name="post_title" id="title" cols="10" rows="1" class="form-control" placeholder="Post Title">{{ (old('post_title') != null) ? old('post_title') : $post->post_name  }}</textarea>
+                        <textarea name="post_title" id="title" cols="10" rows="1" class="form-control" placeholder="Post Title">{{ (old('post_title') != null) ? old('post_title') : $post->post_title  }}</textarea>
                         <small class="text-danger post-title-error">{{ $errors->first('post_title') }}</small>
                     </div>
                 </div>

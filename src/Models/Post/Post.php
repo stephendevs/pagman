@@ -10,7 +10,7 @@ class Post extends Model
 
 
     protected $fillable = [
-        'post_name', 'post_type', 'post_content', 'post_featured_image', 'extract_text'
+        'post_key', 'post_type', 'post_title', 'post_content', 'post_featured_image', 'extract_text'
     ];
     
     protected $with = ['author:id,username'];

@@ -15,7 +15,7 @@
                 <td>
                     <input type="checkbox">
                 </td>
-                <td>{{ $post->post_name }}</td>
+                <td>{{ $post->post_title }}</td>
                 <td>{{ ($post->author != null) ? $post->author['username'] : 'System' }}</td>
                 <td>{{ $post->post_type }}</td>
                 <td>{{ $post->created_at }}</td>

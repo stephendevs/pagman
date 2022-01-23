@@ -25,7 +25,7 @@ require stephendevs/pagman
      * Package Service Providers...
      */
     Stephendevs\Pagman\Providers\PagmanServiceProvider::class,
-],
+],****
 ```
 3. Configure your .env file to use correct database info
 

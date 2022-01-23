@@ -63,6 +63,7 @@ return [
         'pagman::lad.sidebar.pages',
         'pagman::lad.sidebar.appearance',
     ],
+    
 
     'users_sidebar_items' => [
         //'pagman::lad.sidebar.users'

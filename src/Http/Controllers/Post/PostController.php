@@ -43,7 +43,8 @@ class PostController extends Controller
         $request->validated();
 
         $post = new Post();
-        $post->post_name = $request->post_title;
+        $post->post_title = $request->post_title;
+        $post->post_key = str_replace(' ', '-', $request->post_title);
         $post->extract_text = $request->extract_text;
         $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
         $post->post_type = $request->post_type;
@@ -87,7 +88,7 @@ class PostController extends Controller
         $request->validated();
         $post = Post::with('author:id,username')->findPost('id', $id)->firstOrFail();
 
-        $post->post_name = $request->post_title;
+        $post->post_title = $request->post_title;
         $post->extract_text = $request->extract_text;
         $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
         $post->post_type = $request->post_type;

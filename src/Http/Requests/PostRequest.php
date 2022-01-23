@@ -24,7 +24,7 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'post_title' => 'required',
+            'post_title' => 'required|unique:posts,post_title',
             'post_type' => 'required',
             'extract_text' => 'nullable|min:3|max:200',
             'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
@@ -34,7 +34,8 @@ class PostRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Please Provide Post Title .........',
+            'post_title.required' => 'Please Provide Post Title .........',
+            'post_title.unique' => 'The post with this title already exists .........',
         ];
     }
 }

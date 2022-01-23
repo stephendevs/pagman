@@ -15,14 +15,15 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('post_name')->unique();
-            $table->string('post_title');
+            $table->string('post_title')->unique();
+            $table->string('post_key')->unique();
             $table->string('post_type');
             $table->text('extract_text')->nullable();
             $table->text('post_content')->nullable();
             $table->string('mime_type')->nullable();
             $table->text('post_featured_image')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();
+
 
             $table->foreign('author_id')->references('id')->on(config('pagman.user_table', 'admins'))->onDelete('cascade');
             $table->timestamps();

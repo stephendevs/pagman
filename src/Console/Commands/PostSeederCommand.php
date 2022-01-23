@@ -5,6 +5,7 @@ namespace Stephendevs\Pagman\Console\Commands;
 use Illuminate\Console\Command;
 
 use Stephendevs\Pagman\Models\Post\Post;
+use Illuminate\Support\Str;
 
 class PostSeederCommand extends Command
 {
@@ -50,7 +51,8 @@ class PostSeederCommand extends Command
             for ($i=0; $i < count($data) ; $i++) { 
                 # code...
                 Post::create([
-                    'post_name' => (array_key_exists('post_name', $data[$i])) ?  $data[$i]['post_name'] : 'post_name',
+                    'post_title' => (array_key_exists('post_title', $data[$i])) ?  $data[$i]['post_title'] : Str::randowm(10),
+                    'post_key' => (array_key_exists('post_title', $data[$i])) ?  str_replace(' ', '-', $data[$i]['post_title']) : Str::randowm(10),
                     'post_content' => (array_key_exists('post_content', $data[$i])) ?  $data[$i]['post_content'] : null,
                     'extract_text' => (array_key_exists('extract_text', $data[$i])) ?  $data[$i]['extract_text'] : null,
                     'post_type' => (array_key_exists('post_type', $data[$i])) ?  $data[$i]['post_type'] : 'post_type',

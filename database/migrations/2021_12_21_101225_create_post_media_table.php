@@ -18,6 +18,7 @@ class CreatePostMediaTable extends Migration
             $table->text('media');
             $table->string('mime_type')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();
+            $table->unsignedInteger('post_id')->nullable();
             $table->timestamps();
             $table->foreign('author_id')->references('id')->on(config('pagman.user_table', 'admins'))->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');

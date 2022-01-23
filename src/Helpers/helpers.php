@@ -1,5 +1,6 @@
 <?php
 use Stephendevs\Pagman\Models\Post\Post;
+use Stephendevs\Pagman\Models\Option\Option;
 
 
 if(!function_exists('standard_posts')){
@@ -19,6 +20,12 @@ if(!function_exists('posts')){
     }
 }
 
+if(!function_exists('post')){
+    function post($post_type, $post_key = null){
+        return ($post_key != null) ? Post::where('post_type', $post_type)->where('post_key', $post_key)->first() : Post::where('post_type', $post_type)->first();
+    }
+}
+
 if(!function_exists('find_post')){
     function find_post($id)
     {
@@ -33,3 +40,20 @@ if(!function_exists('posts_with_media')){
     }
 }
 
+if(!function_exists('pm_updateOrCreateOption')){
+    function pm_updateOrCreateOption($key, $value) : bool{
+        if(!Option::where('option_key', $key)->update(['option_value' => $value])){
+            return (Option::create(['option_key' => $key, 'option_value' => $value])) ? true : false;
+        }else{
+            return true;
+        }
+    }
+}
+
+if(!function_exists('pm_option')){
+    function pm_option($key, $default = null){
+        $option = Option::option('option_key', $key)->first();
+
+        return ($option) ? $option->option_value : $default;
+    }
+}

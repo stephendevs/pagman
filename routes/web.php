@@ -14,6 +14,9 @@ use Stephendevs\Pagman\Http\Controllers\Setting\SettingController;
 
 use Stephendevs\Pagman\Http\Controllers\Post\PostController;
 
+use Stephendevs\Pagman\Http\Controllers\Theme\ThemeOptionController;
+use Stephendevs\Pagman\Http\Controllers\Theme\ThemeCustomizationController;
+
 
 
 Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
@@ -31,9 +34,9 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::post('/menuitem/create/{id}', [MenuItemController::class, 'store'])->name('pagman.menuitem.create');
         Route::get('/menuitem/delete/{id}', [MenuItemController::class, 'destroy'])->name('pagman.menuitem.destroy');
 
-        Route::get('/themes', [MenuController::class, 'show'])->name('pagman.themes');
-        Route::get('/theme/{name}', [MenuController::class, 'show'])->name('pagman.theme');
-        Route::get('/theme/{name}/customize', [MenuController::class, 'show'])->name('pagman.theme.customize');
+        //Route::get('/themes', [MenuController::class, 'show'])->name('pagman.themes');
+        //Route::get('/theme/{name}', [MenuController::class, 'show'])->name('pagman.theme');
+       // Route::get('/theme/{name}/customize', [MenuController::class, 'show'])->name('pagman.theme.customize');
 
         Route::get('/menus/menuitem/remove/{pivot_id}', [MenuItemController::class, 'remove'])->name('pagman.menus.menuitem.remove');
 
@@ -71,6 +74,10 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
 
         Route::view('/bootsrapmenuitems', 'pagman::web.menu.bootstrapmenuitems');
+
+        Route::get('/options', [ThemeOptionController::class, 'index'])->name('pagman.theme.options');
+        Route::get('/customize', [ThemeCustomizationController::class, 'index'])->name('pagman.theme.customize');
+
 
 
     });
