@@ -11,12 +11,16 @@
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-        @php
-        $standard_posts = standard_post_types();
-        @endphp
         @if ($count = count($standard_posts))
             @for ($i = 0; $i < $count; $i++)
                 <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
+            @endfor
+        @endif
+        <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header">Custom Posts</h6>
+         @if ($count = count($custom_posts))
+            @for ($i = 0; $i < $count; $i++)
+                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Posts' }}</a>
             @endfor
         @endif
     </div>
@@ -28,12 +32,14 @@
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
-        <a class="dropdown-item" data-toggle="modal" data-target="#createCustomUrlPostModal" href="#">Custom Url</a>
-        <a class="dropdown-item"  href="{{ route('pagman.posts.create', ['posttype' => 'downloadable']) }}">Downloadable</a>
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Template</h6>
-        <a class="dropdown-item" href="#">Slider</a>
-        <a class="dropdown-item" href="#">After divider action</a>
+        <h6 class="dropdown-header">Custom Posts</h6>
+        
+        @if ($count = count($custom_posts))
+            @for ($i = 0; $i < $count; $i++)
+                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype.create', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Post' }}</a>
+            @endfor
+        @endif
     </div>
 </div>
 @endsection
@@ -48,10 +54,15 @@
 <section class="mt-4">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-12">
+                @include('pagman::core.includes.alerts.deletedresponse')
+            </div>
+        </div>
+        <div class="row">
 
             <!-- filter search posts select posts -->
             <!-- Posts Table -->
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         @include('pagman::core.includes.tables.postsTable', ['posts' => $posts])
@@ -61,7 +72,5 @@
         </div>
     </div>
 </section>
-
-@include('pagman::core.includes.modals.createCustomUrlPostModal')
 
 @endsection

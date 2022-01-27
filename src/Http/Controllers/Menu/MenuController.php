@@ -15,15 +15,20 @@ class MenuController extends Controller
 {
     use MenuOrganiser;
 
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     /**
      * Display a listing of all menu items for specific menu.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($menu)
+    public function index()
     {
-        $menu = Menu::testFindMenuItems($menu)->firstOrFail();
-        return view('pagman::menus.index', compact(['menu']));
+        $menus = Menu::withCount(['menuItems'])->get();
+        return view('pagman::menus.index', compact(['menus']));
     }
 
     /**
@@ -65,9 +70,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($name)
+    public function show($id)
     {
-        $menu = Menu::getMenuItems($name)->firstOrFail();
+        $menu = Menu::with(['menuItems'])->findOrFail($id);
         return view('pagman::menus.show', compact(['menu']));
     }
 

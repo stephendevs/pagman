@@ -11,11 +11,16 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
-        <a class="dropdown-item" href="{{ route('pagman.posts.create', ['posttype' => 'downloadable']) }}">Downloadable</a>
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Template</h6>
-        <a class="dropdown-item" href="#">Slider</a>
-        <a class="dropdown-item" href="#">After divider action</a>
+        <h6 class="dropdown-header">Custom Posts</h6>
+        @php
+            $custom_posts = array_keys(custom_posts_types());
+        @endphp
+        @if ($count = count($custom_posts))
+            @for ($i = 0; $i < $count; $i++)
+                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype.create', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Post' }}</a>
+            @endfor
+        @endif
     </div>
 </div>
 <div class="dropdown d-inline mr-5">
@@ -25,14 +30,7 @@
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-        @php
-        $standard_posts = standard_post_types();
-        @endphp
-        @if ($count = count($standard_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
-            @endfor
-        @endif
+        
     </div>
 </div>
 
@@ -40,99 +38,33 @@
 
 @section('requiredJs')
 <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
-<script src="{{ asset('pagman/js/posts.js') }}" defer></script>
+<script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
 
 @section('requiredCss')
-<link href="{{ asset('stephendevs/pagman/css/posts.css') }}" rel="stylesheet">
+<link href="{{ asset('pagman/css/pagman.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 <section class="mt-4">
     <div class="container-fluid">
-
-       
-        @if (request('posttype') == 'downloadable')
-        <!-- create Post Form -->
-        <form action="{{ route('pagman.posts.store') }}" class="row" id="createStandardPostForm" method="POST">
-            @csrf
-            <div class="col-lg-3 offset-lg-9">
-                
+        <div class="row">
+            <div class="col-lg-12">
+                @include('pagman::core.includes.alerts.createdresponse')
             </div>
-
-            <div class="col-lg-3">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <!-- Post Type -->
-                        <label for="postType">Post Format</label>
-                        <select name="post_type" id="postType" class="form-control w-75">
-                            <option value="post" selected>Standard</option>
-                            <option value="post">Post</option>
-                            <option value="page">Page</option>
-                        </select>
-                        <small class="text-danger">{{ $errors->first('post_type') }}</small>
-
-                        <!-- Post Title -->
-                        <label for="title">Post Title</label>
-                        <textarea name="post_title" id="title" cols="10" rows="4" class="form-control" placeholder="Post Title">{{ old('post_title') }}</textarea>
-                        <small class="text-danger">{{ $errors->first('post_title') }}</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- post title, name and content -->
-            <div class="col-lg-6">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <input type="file">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card shadow-sm mb-3">
-                    <div class="card-body">
-                        Posts are pretty much everything that you may want to display on the website template. its up to you how to store and display the post content. The post content can be stored as <b>HTML</b>, <b>JSON</b>, <b>String</b>, <b>URL</b> or <b>Array</b>.
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <div class="dropup">
-                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                        Save Post
-                                    </button>
-                            <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <input type="submit" value="Save" class="dropdown-item" />
-                                <input type="submit" value="Save & Publish" class="dropdown-item" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </form>
-        @else
-        <!-- create Post Form -->
+        </div>
         <form action="{{ route('pagman.posts.store') }}" class="row" id="createStandardPostForm" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="col-lg-3 offset-lg-9">
-                
-            </div>
 
+            <!-- Column 1 -->
             <div class="col-lg-3">
                 <div class="card shadow-sm">
                     <div class="card-body">
 
                         <!-- Post Type -->
-                        <label for="postType">Post Format | Type</label>
+                        <label for="postType">Post Type</label>
                         <select name="post_type" id="postType" class="form-control w-75">
-                            <option value="standard" selected>Standard</option>
-                            @php
-                            $standard_posts = standard_post_types();
-                            @endphp
                             @if ($count = count($standard_posts))
                                 @for ($i = 0; $i < $count; $i++)
                                     <option value="{{ $standard_posts[$i] }}">{{ $standard_posts[$i] }}</option>
@@ -214,7 +146,6 @@
             <div class="col-lg-12 text-center text-success success"></div>
             <div class="col-lg-12 text-center text-danger error"></div>
         </form>
-        @endif
     </div>
 </section>
 

@@ -1,16 +1,16 @@
 @extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
 @section('requiredCss')
-<link href="{{ asset('stephendevs/pagman/css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('pagman/css/pagman.css') }}" rel="stylesheet">
 @endsection
 
 
 @section('requiredJs')
-    <script src="{{ asset('stephendevs/pagman/js/menu/menu.js') }}" defer></script>
+    <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
 @section('pageHeading')
-    {{ 'Menu |' }}
+    {{ 'Menu | '.$menu->name }}
 @endSection
 
     

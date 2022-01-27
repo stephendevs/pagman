@@ -13,6 +13,15 @@ if(!function_exists('standard_posts')){
     }
 }
 
+if(!function_exists('custom_posts_types')){
+    function custom_posts_types()
+    {
+        return array_merge([
+            'test' => 'pagman::tests'
+        ], config(config('pagman.theme', 'pagman').'.custom_post_types', []));
+    }
+}
+
 if(!function_exists('posts')){
     function posts($post_type, $paginated = false, $count = 4)
     {

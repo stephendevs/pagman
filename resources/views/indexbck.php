@@ -1,7 +1,7 @@
 @extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
 @section('requiredJs')
-    <script src="{{ asset('stephendevs/pagman/js/app.js') }}" defer></script>
+    <script src="{{ asset('pagman/js/app.js') }}" defer></script>
 @endsection
 
 @section('pageHeading', 'Page Manager')

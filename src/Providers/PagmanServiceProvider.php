@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 
 use  Stephendevs\Pagman\Console\Commands\PostSeederCommand;
 use  Stephendevs\Pagman\Console\Commands\PagmanSeederCommand;
+use  Stephendevs\Pagman\Console\Commands\PagmanTheme;
 
 
 class PagmanServiceProvider extends ServiceProvider
@@ -42,13 +43,23 @@ class PagmanServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
             $this->commands([
-               PostSeederCommand::class, PagmanSeederCommand::class,
+               PostSeederCommand::class, PagmanSeederCommand::class, PagmanTheme::class,
             ]);
 
             //config file
             $this->publishes([
                 __DIR__.'/../../config/pagman.php' => config_path('pagman.php')
             ], 'pagman-config');
+
+             //config file
+             $this->publishes([
+                __DIR__.'/../../config/theme.php' => config_path('theme.php')
+            ], 'pagman-theme-config');
+
+              //config file
+              $this->publishes([
+                __DIR__.'/../../config/lad.php' => config_path('lad.php')
+            ], 'pagman-lad-config');
 
             //Publish Customizable Views
             $this->publishes([
@@ -60,7 +71,6 @@ class PagmanServiceProvider extends ServiceProvider
               __DIR__.'/../../resources/assets' => public_path('stephendevs/pagman'),
             ], 'pagman-assets');
 
-          
 
             // DB Migrations
             $this->publishes([

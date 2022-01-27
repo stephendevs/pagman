@@ -22,12 +22,19 @@ return [
         'contact' => '/contact-us'
     ],
 
-
      /*
     |--------------------------------------------------------------------------
-    | Post Types --- Register
+    | Standard Post Types
     |--------------------------------------------------------------------------
     */
+    'standard_post_types' => [
+        'blog', 'news'
+    ],
+
+    'custom_post_types' => [
+        'event' => 'aamsnm::dashboard.events'
+    ],
+
     'post_types' => [
         'page', 'slider', 'custom_url', 'post', 'blog', 'event', 'download', 'social_link'
     ],

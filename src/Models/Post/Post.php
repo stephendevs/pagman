@@ -4,18 +4,21 @@ namespace Stephendevs\Pagman\Models\Post;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Stephendevs\Pagman\Traits\MenuItemTypeModel as MenuItems;
+
 
 class Post extends Model
 {
+    use MenuItems;
 
 
     protected $fillable = [
         'post_key', 'post_type', 'post_title', 'post_content', 'post_featured_image', 'extract_text'
     ];
     
-    protected $with = ['author:id,username'];
+    protected $with = ['author:id,name'];
     
-    public function scopeFindPost($query, $column, $value)
+    public function scopedFindPost($query, $column, $value)
     {
         return $query
         ->where($column, $value);
@@ -84,11 +87,13 @@ class Post extends Model
 
    public function author()
    {
-       return $this->belongsTo(config('pagman.user_model', 'Stephendevs\Lad\Models\Admin\Admin'));
+       return $this->belongsTo('App\User');
    }
 
    public function media()
    {
         return $this->hasMany('Stephendevs\Pagman\Models\Post\PostMedia');
    }
+
+  
 }

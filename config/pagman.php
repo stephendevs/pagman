@@ -6,7 +6,7 @@ return [
     | Route prefix for accessing the admin panel for pagman -- default dashboard/pagman
     |--------------------------------------------------------------------------
     */
-    'route_prefix' => 'dashboard/aamsnm',
+    'route_prefix' => 'dashboard',
 
      /*
     |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ return [
     | 'middlewares' => ['web', 'auth:admin'],
     |--------------------------------------------------------------------------
     */
-    'middlewares' => ['web', 'auth:admin'],
+    'middlewares' => ['web'],
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,8 @@ return [
     | The template_type_modular by default is asured to be modular --> true.
     |--------------------------------------------------------------------------
     */
-    'theme' => 'theme',
+    'theme' => env('PAGMAN_THEME', ''),
+
     'template_type_modular' => true,
 
     /*
@@ -77,8 +78,8 @@ return [
     'user_table' => 'admins',
     'user_model' => 'Stephendevs\Lad\Models\Admin\Admin',
 
+
     'standard_post_types' => [
-        'news', 'blog', 'page'
     ],
 
     'post_types' => [

@@ -36,4 +36,9 @@ class MenuItem extends Model
         return $this->children()->with('childrenRecursive');
     }
 
+    public function menuItemType()
+    {
+        return $this->morphTo();
+    }
+
 }

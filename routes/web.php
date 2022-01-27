@@ -23,13 +23,13 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
     Route::prefix(config('pagman.route_prefix', 'dashboard/theme'))->group(function(){
         
-        Route::get('/', [MasterController::class, 'index'])->name('pagman');
         Route::get('/sync/menuitems', [MasterController::class, 'syncMenuItems'])->name('pagman.syn.menuitems');
 
 
-        Route::get('/menus/{menu}', [MenuController::class, 'index'])->name('pagman.menus');
+        Route::get('/menus', [MenuController::class, 'index'])->name('pagman.menus');
+
         Route::post('/menu/create', [MenuController::class, 'store'])->name('pagman.menus.store');
-        Route::get('/menus/{name}', [MenuController::class, 'show'])->name('pagman.menus.show');
+        Route::get('/menus/{id}', [MenuController::class, 'show'])->name('pagman.menus.show');
 
         Route::post('/menuitem/create/{id}', [MenuItemController::class, 'store'])->name('pagman.menuitem.create');
         Route::get('/menuitem/delete/{id}', [MenuItemController::class, 'destroy'])->name('pagman.menuitem.destroy');
@@ -61,13 +61,18 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::get('/test', [TestController::class, 'index'])->name('test');
 
         Route::get('/posts', [PostController::class, 'index'])->name('pagman.posts');
-        Route::get('/posts/posttype/{posttype?}', [PostController::class, 'index'])->name('pagman.posts.posttype');
-        Route::get('/posts/create/{posttype?}', [PostController::class, 'create'])->name('pagman.posts.create');
+        Route::get('/posts/create', [PostController::class, 'create'])->name('pagman.posts.create');
         Route::post('/posts/create', [PostController::class, 'store'])->name('pagman.posts.store');
-        Route::get('/posts/{id}', [PostController::class, 'edit'])->name('pagman.posts.show');
+        Route::get('/posts/show/{id}', [PostController::class, 'show'])->name('pagman.posts.show');
         Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('pagman.posts.edit');
         Route::post('/posts/edit/{id}', [PostController::class, 'update'])->name('pagman.posts.update');
         Route::get('/posts/trash/{id}', [PostController::class, 'destroy'])->name('pagman.posts.destroy');
+
+        Route::get('/posts/posttype/{posttype?}', [PostController::class, 'index'])->name('pagman.posts.posttype');
+        Route::get('/posts/posttype/{posttype?}/create', [PostController::class, 'create'])->name('pagman.posts.posttype.create');
+        Route::get('/posts/show/{id}/posttype/{posttype?}', [PostController::class, 'show'])->name('pagman.posts.posttype.show');
+        Route::get('/posts/edit/{id}/posttype/{posttype?}', [PostController::class, 'edit'])->name('pagman.posts.posttype.edit');
+
         
 
         Route::get('/poststype/view/{view}', [PostTypeViewController::class, 'index'])->name('pagman.posttypeview');

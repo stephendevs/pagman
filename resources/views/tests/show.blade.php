@@ -1,0 +1,1 @@
+Showing of test post type

@@ -1,0 +1,1 @@
+Creating of test post type
