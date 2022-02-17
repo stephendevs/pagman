@@ -109,7 +109,7 @@
                         <h6>Post Featured Image</h6>
                     </div>
                     <div class="card-body p-0">
-                        <img src="{{ ($post->post_featured_image != null) ? asset('storage/'.$post->post_featured_image) : asset('pagman/img/post_featured_image.png') }}" alt="" id="imageHolderId" class="img-fluid">
+                        <img src="{{ ($post->post_featured_image != null) ? asset($post->post_featured_image) : asset('pagman/img/post_featured_image.png') }}" alt="" id="imageHolderId" class="img-fluid">
                     </div>
                     <div class="card-footer">
                         <input type="file" name="post_featured_image" id="selectPostFeaturedImage" /><hr />

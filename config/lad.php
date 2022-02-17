@@ -60,6 +60,8 @@ return [
     'create_users' => 'Adds or creates user accounts ... Like admins accounts',
     'manage_user_permissions' => 'Manages user permissions',
 
+    'cache_settings' => 'hello',
+
     'cmd' => 'Access to command interface to run artisan commands.',
     'configure_system_settings' => 'Configure system settings, like Mail Servers, Enable System Caching etc',
     'manage_mail_servers' => 'Manage Mail Servers',

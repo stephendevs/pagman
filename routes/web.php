@@ -77,10 +77,9 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
         Route::get('/poststype/view/{view}', [PostTypeViewController::class, 'index'])->name('pagman.posttypeview');
 
-
         Route::view('/bootsrapmenuitems', 'pagman::web.menu.bootstrapmenuitems');
 
-        Route::get('/options', [ThemeOptionController::class, 'index'])->name('pagman.theme.options');
+        Route::get('/theme/options', [ThemeOptionController::class, 'index'])->name('pagman.theme.options')->middleware(['auth']);
         Route::get('/customize', [ThemeCustomizationController::class, 'index'])->name('pagman.theme.customize');
 
 

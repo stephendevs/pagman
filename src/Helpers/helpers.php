@@ -3,7 +3,7 @@ use Stephendevs\Pagman\Models\Post\Post;
 use Stephendevs\Pagman\Models\Option\Option;
 
 
-if(!function_exists('standard_posts')){
+if(!function_exists('standard_post_types')){
 
     function standard_post_types() : array
     {
@@ -23,7 +23,7 @@ if(!function_exists('custom_posts_types')){
 }
 
 if(!function_exists('posts')){
-    function posts($post_type, $paginated = false, $count = 4)
+    function posts($post_type = null, $paginated = false, $count = 4)
     {
         return Post::posts($post_type, $paginated, $count);
     }
@@ -34,6 +34,8 @@ if(!function_exists('post')){
         return ($post_key != null) ? Post::where('post_type', $post_type)->where('post_key', $post_key)->first() : Post::where('post_type', $post_type)->first();
     }
 }
+
+
 
 if(!function_exists('find_post')){
     function find_post($id)

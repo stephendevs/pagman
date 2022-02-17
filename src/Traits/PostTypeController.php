@@ -32,14 +32,14 @@ trait PostTypeController {
 
     public function create($posttype = null)
     {
-        $standard_posts = $this->standardPostTypes();
+       $standard_posts = $this->standardPostTypes();
 
         if ($posttype == null || in_array($posttype, $this->standardPostTypes())) {
             return (request()->expectsJson()) ? response()->json($standard_posts) : view('pagman::posts.create', compact(['standard_posts']));
         }
         if(in_array($posttype, array_keys($this->customPostTypes()))){
             $custom_post_types = $this->customPostTypes();
-            return view($custom_post_types[$posttype].'.create');
+            return view($custom_post_types[$posttype].'.create', compact(['standard_posts', 'custom_post_types']));
         }
         return 'unknown post type';
     }
@@ -79,7 +79,7 @@ trait PostTypeController {
 
         if(in_array($posttype, array_keys($this->customPostTypes()))){
             $custom_post_types = $this->customPostTypes();
-            return view($custom_post_types[$posttype].'.edit');
+            return view($custom_post_types[$posttype].'.edit', compact(['post', 'standard_posts']));
         }
 
         return 'unknown post type';
@@ -102,6 +102,7 @@ trait PostTypeController {
 
     private function standardPostTypes()
     {
+
         return array_merge([
             'post', 'page'
         ], config(config('pagman.theme', 'pagman').'.standard_post_types', []));

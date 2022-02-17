@@ -13,7 +13,8 @@ use Stephendevs\Pagman\Traits\PostTypeController as MasterPostController;
 class PostController extends Controller
 {
     use MasterPostController;
-    
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -22,18 +23,17 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-
         $request->validated();
 
         $post = new Post();
         $post->post_title = $request->post_title;
         $post->post_key = str_replace(' ', '-', $request->post_title);
         $post->extract_text = $request->extract_text;
-        $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
+        $post->post_content = $request->post_content;
         $post->post_type = $request->post_type;
 
         //dertermine if request has file
-        $post->post_featured_image = ($request->hasFile('post_featured_image')) ? request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
+        $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
 
         $post->save();
 
@@ -58,12 +58,14 @@ class PostController extends Controller
         $post->post_type = $request->post_type;
 
         //dertermine if request has file
-        $post->post_featured_image = ($request->hasFile('post_featured_image')) ? request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
+        ($request->hasFile('post_featured_image'))
+        ? $post->post_featured_image = 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public')
+        : '';
 
 
         $post->save();
 
-        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Editted Successfully'], 200) : back()->withInput()->with('updated', 'Post Updated Successfully');
+        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Updated Successfully'], 200) : back()->withInput()->with('updated', 'Post Updated Successfully');
     }
 
 

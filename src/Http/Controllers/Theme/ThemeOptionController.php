@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class ThemeOptionController extends Controller
 {
+
     public function index()
     {
-        return view(config('web.theme_options_view', 'pagman::theme.options.index'));
+        return view(config('pagman.theme').'::dashboard.options.index');
     }
 
 
