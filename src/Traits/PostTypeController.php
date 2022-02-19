@@ -27,7 +27,7 @@ trait PostTypeController {
             return (request()->expectsJson()) ? response()->json($posts) : view($custom_post_types[$posttype].'.index', compact(['posts']));
         }
 
-        return 'unknown post type';
+        return abort(404, 'unknown post type');
     }
 
     public function create($posttype = null)
@@ -117,7 +117,7 @@ trait PostTypeController {
 
     private function posts($posttype = null)
     {
-        return ($posttype) ? Post::with('author', 'menuItems')->where('post_type', $posttype)->paginate(10) : Post::with('author', 'menuItems')->paginate(10);
+        return ($posttype) ? Post::with('author', 'menuItems', 'updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate(5) : Post::with('author', 'menuItems', 'updatedby')->orderBy('created_at', 'desc')->paginate(5);
     }
 
     private function post($id, $posttype = null)

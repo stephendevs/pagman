@@ -1,42 +1,47 @@
-<div class="pages-table-wrapper">
-    <div class="table-responsive">
-        <table class="table table-borderless table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Slug</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Last Modified</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($pages as $page)
-                <tr class="page-row">
-                    <td>
-                        <div>
-                            <span><a href="{{ route('pagmanPageShow', ['id' => $page->id]) }}">{{ $page->title }}</a></span><br />
-                            <ul class="actions mt-1 p-0 collapse">
-                                <li class="d-inline">Edit</li> |
-                                <li class="d-inline"><a href="#" data-toggle="modal" data-target="{{ '#quickEditPageModal'.$page->id }}">Quick Edit</a></li> |
-                                <li class="d-inline">Trash</li> |
-                                <li class="d-inline">Preview</li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>{{ $page->slug }}</td>
-                    <td>{{ ($page->published) ? __('Published') : __('Not Published') }}</td>
-                    <td>{{ $page->created_at }}</td>
-                    <td>
-                        <a href="" class="btn btn-sm btn-danger" data-toggle="modal" data-target="{{ '#deletePageModal'.$page->id }}"><i class="fa fa-fw fa-trash"></i></a>
-                        @includeIf('lpage::core.includes.modals.deletePageModal', ['some' => 'data'])
-                        <a href="{{ route('pagmanPageEdit', ['id' => $page->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-edit"></i></a>
-                    </td>
-                    @includeIf('pagman::core.includes.modals.quickEditPageModal', ['some' => 'data'])
-                </tr>
-                @endforeach
-                           
-            </tbody>
-        </table>
-    </div>
+@if (count($pages))
+<div class="table-responsive">
+    <table class="table table-borderless">
+        <thead>
+            <th>
+                <input type="checkbox">
+            </th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Created On</th>
+            <th>Last Modified On</th>
+            <th>Last Modified By</th>
+            <th></th>
+        </thead>
+        <tbody>
+           @foreach ($pages as $page)
+            <tr>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>{{ $page->post_title }}</td>
+                <td>{{ ($page->author != null) ? $page->author['name'] : 'System' }}</td>
+                <td>{{ $page->post_type }}</td>
+                <td>{{ $page->created_at }}</td>
+                <td>{{ $page->updated_at }}</td>
+                <td>{{ ($page->author != null) ? $page->updatedby['name'] : 'System' }}</td>
+
+                <td>
+                    <a href="{{ route('pagman.posts.destroy', ['id' => $page->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                    <a href="{{ route('pagman.pages.edit', ['id' => $page->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                </td>
+            </tr>
+           @endforeach
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
 </div>
+{{ (count($pages) > 1) ? $pages->links() : '' }}
+<div>
+</div>
+@else
+<div>
+    no posts
+</div>
+@endif

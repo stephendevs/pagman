@@ -51,7 +51,9 @@ class CreatePagmanTables extends Migration
             $table->string('mime_type')->nullable();
             $table->text('post_featured_image')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();
+            $table->unsignedBigInteger('updatedby_id')->nullable();
             $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('updatedby_id')->references('id')->on('users');
             $table->timestamps();
         });
 

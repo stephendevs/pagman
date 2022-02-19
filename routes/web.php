@@ -48,13 +48,14 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::get('/menu/delete/{id}', [MenuController::class, 'destroy'])->name('lpageMenuDestroy');
 
         Route::get('/pages/menu', [PageController::class, 'menu']);
-        Route::get('/pages', [PageController::class, 'index'])->name('pagmanPages');
-        Route::get('/page/create', [PageController::class, 'create'])->name('pagmanPageCreate');
-        Route::post('/page/store', [PageController::class, 'store'])->name('pagmanPageStore');
-        Route::get('/page/show/{id}', [PageController::class, 'show'])->name('pagmanPageShow');
-        Route::get('/page/edit/{id}', [PageController::class, 'edit'])->name('pagmanPageEdit');
-        Route::post('/page/update/{id}', [PageController::class, 'update'])->name('pagmanPageUpdate');
-        Route::get('/page/delete/{id}', [PageController::class, 'destroy'])->name('pagmanPageDestroy');
+        Route::get('/pages', [PageController::class, 'index'])->name('pagman.pages');
+
+        Route::get('/pages/create', [PageController::class, 'create'])->name('pagman.pages.create');
+        Route::post('/pages/store', [PageController::class, 'store'])->name('pagman.pages.store');
+        Route::get('/pages/show/{id}', [PageController::class, 'show'])->name('pagman.pages.show');
+        Route::get('/pages/edit/{id}', [PageController::class, 'edit'])->name('pagman.pages.edit');
+        Route::post('/pages/update/{id}', [PageController::class, 'update'])->name('pagman.pages.update');
+        Route::get('/pages/delete/{id}', [PageController::class, 'destroy'])->name('pagman.pages.destroy');
 
         Route::get('/settings', [SettingController::class, 'index'])->name('pagmanSettings');
 

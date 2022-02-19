@@ -11,7 +11,7 @@ use Stephendevs\Pagman\Http\Requests\PageRequest;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 
-use Stephendevs\Pagman\Models\Page\Page;
+use Stephendevs\Pagman\Models\Post\Post;
 use Stephendevs\Pagman\Models\Menu\Menu;
 
 class PageController extends Controller
@@ -24,7 +24,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::all();
+        $pages =  Post::with('author', 'menuItems', 'updatedby')->where('post_type', 'page')->orderBy('created_at', 'desc')->paginate(5);
         return view('pagman::page.index', compact(['pages']));
     }
      /**
@@ -34,8 +34,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        $pages = Page::all();
-        return view('pagman::page.create', compact(['pages']));
+        return view('pagman::page.create');
     }
 
     /**
@@ -46,34 +45,32 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $data = $request->validated();
+        
+        $request->validated();
 
-        $page = new Page();
-        $page->title = $request->title;
-        $page->slug = $request->slug;
-        $page->url = $request->url;
-        $page->content = $request->content;
-        $page->description = $request->description;
-        $page->parent_page_id = $request->parent_page;
+        $post = new Post();
+        $post->post_title = $request->post_title;
+        $post->post_key = str_replace(' ', '-', $request->post_title);
+        $post->extract_text = $request->extract_text;
+        $post->post_content = $request->post_content;
+        $post->post_type = 'page';
+        $post->author_id = auth()->user()->id;
+        $post->updatedby_id = auth()->user()->id;
 
-        $page->save();
+        
+        //dertermine if request has file
+        $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
 
-        if ($request->has('ajax')) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Page Created Successfully',
-                'url' => route('pagmanPageShow', ['id' => $page->id])
-            ], 200);
-        }
+        $post->save();
 
-        return back()->withInput()->with('success', 'Page Created Successfully');
+        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Created Successfully',], 200) : back()->withInput()->with('created', 'Post Created Successfully');
+
     }
 
     public function show($id)
     {
-        $page = Page::with(['menus'])->findOrFail($id);
-        $otherPages = Page::where('id', '!=', $id)->get();
-        return view('pagman::page.show', compact(['page', 'otherPages']));
+        return $page = Post::with(['author'])->findOrFail($id);
+        return view('pagman::page.show', compact(['page']));
     }
 
      /**
@@ -84,16 +81,36 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        $page = Page::findOrfail($id);
-        $otherPages = Page::where('id', '!=', $id)->get();
-        return view('pagman::page.edit', compact(['page', 'otherPages']));
+        $page = Post::findOrfail($id);
+        return view('pagman::page.edit', compact(['page']));
     }
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'post_title' => 'required|unique:posts,post_title,'.$id,
+            'extract_text' => 'nullable|min:3|max:200',
+            'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
+        ]);
 
-        return back()->withInput()->with('success', 'Updated Successfully');
+       $post = Post::with('author:id,name')->findOrFail($id);
+
+        $post->post_title = $request->post_title;
+        $post->extract_text = $request->extract_text;
+        $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
+        $post->updatedby_id = auth()->user()->id;
+
+        //dertermine if request has file
+        ($request->hasFile('post_featured_image'))
+        ? $post->post_featured_image = 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public')
+        : '';
+
+
+        $post->save();
+
+        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Updated Successfully'], 200) : back()->withInput()->with('updated', 'Post Updated Successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -103,8 +120,8 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        Page::destroy($id);
-        return back()->with('success', 'Page deleted successfully');
+        Post::destroy($id);
+        return back()->with('deleted', 'Page deleted successfully');
     }
 
 

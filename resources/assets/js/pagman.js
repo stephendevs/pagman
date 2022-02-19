@@ -71,7 +71,7 @@
     });
 
     //Create Standard Post Form
-    $('#createStandardPostForm').submit(function(e){
+    $('#createStandardPostFor').submit(function(e){
         e.preventDefault();
 
         //Validation Error Holders
@@ -144,7 +144,10 @@
                     postExtractTextError.text('');
                     featuredImageError.text('');
                     failedMsg.text('');
-                    (response.message != undefined) ? successMsg.text(response.message) : successMsg.text('');
+                    (response.message != undefined) ? $('#updated').removeClass('d-none').addClass('show').find('.message').text(response.message) : successMsg.text('');
+                    setTimeout(function(){
+                        $('#updated').removeClass('show').addClass('d-none');
+                    },2000);
                 }
             },
             statusCode : {

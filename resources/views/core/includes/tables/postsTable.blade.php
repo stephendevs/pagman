@@ -8,8 +8,9 @@
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
-            <th>Posted On</th>
+            <th>Created On</th>
             <th>Last Modified On</th>
+            <th>Last Modified By</th>
             <th></th>
         </thead>
         <tbody>
@@ -19,10 +20,12 @@
                     <input type="checkbox">
                 </td>
                 <td>{{ $post->post_title }}</td>
-                <td>{{ ($post->author != null) ? $post->author['username'] : 'System' }}</td>
+                <td>{{ ($post->author != null) ? $post->author['name'] : 'System' }}</td>
                 <td>{{ $post->post_type }}</td>
                 <td>{{ $post->created_at }}</td>
                 <td>{{ $post->updated_at }}</td>
+                <td>{{ ($post->author != null) ? $post->updatedby['name'] : 'System' }}</td>
+
                 <td>
                     <a href="{{ route('pagman.posts.destroy', ['id' => $post->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                     @if (count($standard_posts))

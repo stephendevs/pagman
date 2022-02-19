@@ -30,7 +30,18 @@
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-        
+         @if ($count = count($standard_posts))
+            @for ($i = 0; $i < $count; $i++)
+                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
+            @endfor
+        @endif
+        <div class="dropdown-divider"></div>
+        <h6 class="dropdown-header">Custom Posts</h6>
+         @if ($count = count($custom_posts))
+            @for ($i = 0; $i < $count; $i++)
+                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Posts' }}</a>
+            @endfor
+        @endif
     </div>
 </div>
 
@@ -129,16 +140,7 @@
                 <!-- Submit Button -->
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <div class="dropup">
-                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                        Save Post
-                                    </button>
-                            <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <input type="submit" value="save" class="dropdown-item" />
-                                <input type="submit" value="Save & Publish" class="dropdown-item" />
-                            </div>
-                        </div>
+                        <input type="submit" value="Save post" class="btn btn-md btn-primary" />
                     </div>
                 </div>
 

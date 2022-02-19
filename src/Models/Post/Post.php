@@ -48,8 +48,6 @@ class Post extends Model
         }
         
     }
-
-
     //The latest news
     public function scopeLatestNews($query, $paginate = false, $count = 4)
     {
@@ -86,6 +84,11 @@ class Post extends Model
 
 
    public function author()
+   {
+       return $this->belongsTo('App\User');
+   }
+
+   public function updatedby()
    {
        return $this->belongsTo('App\User');
    }

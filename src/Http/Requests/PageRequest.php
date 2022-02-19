@@ -24,18 +24,17 @@ class PageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:pages,title',
-            'slug' => 'required|unique:pages,slug',
-            'url' => 'nullable|url',
+            'post_title' => 'required|unique:posts,post_title',
+            'extract_text' => 'nullable|min:3|max:200',
+            'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Please provide page title',
-            'title.unique' => 'There is already a page with this title',
-            'slug.required' => 'Please provide page slug',
+            'post_title.required' => 'Please Provide Post Title .........',
+            'post_title.unique' => 'The post with this title already exists .........',
         ];
     }
 }

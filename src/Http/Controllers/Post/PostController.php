@@ -14,7 +14,6 @@ class PostController extends Controller
 {
     use MasterPostController;
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -31,6 +30,8 @@ class PostController extends Controller
         $post->extract_text = $request->extract_text;
         $post->post_content = $request->post_content;
         $post->post_type = $request->post_type;
+        $post->author_id = auth()->user()->id;
+        $post->updatedby_id = auth()->user()->id;
 
         //dertermine if request has file
         $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
@@ -56,6 +57,7 @@ class PostController extends Controller
         $post->extract_text = $request->extract_text;
         $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
         $post->post_type = $request->post_type;
+        $post->updatedby_id = auth()->user()->id;
 
         //dertermine if request has file
         ($request->hasFile('post_featured_image'))

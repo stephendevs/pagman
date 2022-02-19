@@ -8,7 +8,7 @@
     <div class="bg-white py-2 collapse-inner rounded">
       <h6 class="collapse-header">Manage Pages:</h6>
       <a class="collapse-item" href="{{ route('pagman') }}">{{ __('Page Manager') }}</a>
-      <a class="collapse-item" href="{{ route('pagman.menus') }}">{{ __('Menus') }}</a>
+      <a class="collapse-item dev" href="{{ route('pagman.menus') }}">{{ __('Menus') }}</a>
       <a class="collapse-item" href="{{ route('pagmanPages') }}">{{ __('Pages') }}</a>
     </div>
   </div>
