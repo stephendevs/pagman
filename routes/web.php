@@ -81,6 +81,8 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::view('/bootsrapmenuitems', 'pagman::web.menu.bootstrapmenuitems');
 
         Route::get('/theme/options', [ThemeOptionController::class, 'index'])->name('pagman.theme.options')->middleware(['auth']);
+        Route::post('/theme/options', [ThemeOptionController::class, 'store'])->name('pagman.theme.options.update');
+
         Route::get('/customize', [ThemeCustomizationController::class, 'index'])->name('pagman.theme.customize');
 
 

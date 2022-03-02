@@ -1,5 +1,5 @@
 <!-- -->
-<li class="nav-item sidebar-nav-item d-none">
+<li class="nav-item sidebar-nav-item ">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pageManagerMenu" aria-expanded="true" aria-controls="pageManagerMenu">
       <i class="fa fa-television sidebar-icon"></i>
       <span>Appearance</span>
