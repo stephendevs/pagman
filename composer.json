@@ -11,9 +11,8 @@
     ],
     "minimum-stability" : "dev",
     "autoload": {
-       
         "psr-4": {
-            "Stephendevs\\Lpage\\": "src/"
+            "Stephendevs\\Pagman\\": "src/"
         }
     },
     "config": {
@@ -22,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Stephendevs\\Pagman\\Providers\\LpageServiceProvider"
+                "Stephendevs\\Pagman\\Providers\\PagmanServiceProvider"
             ]
         }
     },
