@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Stephendevs\\Pagman\\Providers\\LpageServiceProvider"
+                "Stephendevs\\Pagman\\Providers\\PagmanServiceProvider"
             ]
         }
     },
