@@ -10,7 +10,7 @@ use Stephendevs\Pagman\Http\Controllers\Post\PostTypeViewController;
 use Stephendevs\Pagman\Http\Controllers\Menu\MenuController;
 use Stephendevs\Pagman\Http\Controllers\Menu\MenuItemController;
 
-use Stephendevs\Pagman\Http\Controllers\Setting\SettingController;
+use Stephendevs\Pagman\Http\Controllers\Settings\SettingsController;
 
 use Stephendevs\Pagman\Http\Controllers\Post\PostController;
 
@@ -84,6 +84,10 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::post('/theme/options', [ThemeOptionController::class, 'store'])->name('pagman.theme.options.update');
 
         Route::get('/customize', [ThemeCustomizationController::class, 'index'])->name('pagman.theme.customize');
+
+        Route::get('/cms/settings', [SettingsController::class, 'index'])->name('pagman.settings');
+        Route::post('/cms/settings', [SettingsController::class, 'store'])->name('pagman.settings.update');
+
 
 
 

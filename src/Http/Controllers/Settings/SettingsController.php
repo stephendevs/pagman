@@ -1,0 +1,42 @@
+<?php
+
+namespace Stephendevs\Pagman\Http\Controllers\Settings;
+
+use Stephendevs\Pagman\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Stephendevs\Lad\Traits\UpdatesOrCreatesOptions;
+
+
+
+class SettingsController extends Controller
+{
+    use UpdatesOrCreatesOptions { 
+        updateOrCreate as store;
+     }
+
+    public function __construct()
+    {
+
+    }
+   
+    public function index()
+    {
+        $options =  $this->getOptions();
+        return view('pagman::settings.index', compact(['options']));
+    }
+
+    protected function options() : array 
+    {
+        return [
+            'posts_pagination_count' => 6,
+        ];
+    }
+
+    protected function rules()
+    {
+        return [
+            'posts_pagination_count' => 'nullable',
+        ];
+    }
+}

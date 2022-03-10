@@ -1,6 +1,13 @@
 {
     "name": "stephendevs/pagman",
-    "description" : "Laravel package for managing wesite pages",
+    "description" : "CMS Package for laravel",
+    "keywords": [
+        "Laravel CMS",
+        "Page manager",
+        "Laravel blog manager",
+        "laravel"
+    ],
+    "homepage": "https://github.com/stephendevs/pagman",
     "type" : "project",
     "licence" : "MIT",
     "authors" : [
@@ -9,6 +16,7 @@
             "email" : "okellostephenomoding@outlook.com"
         }
     ],
+    
     "minimum-stability" : "dev",
     "autoload": {
         "psr-4": {
@@ -25,5 +33,7 @@
             ]
         }
     },
-    "require": {}
+    "require": {
+        "stephendevs/lad": "^0.3.0",
+    }
 }

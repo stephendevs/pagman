@@ -22,8 +22,8 @@
                 <td>{{ $post->post_title }}</td>
                 <td>{{ ($post->author != null) ? $post->author['name'] : 'System' }}</td>
                 <td>{{ $post->post_type }}</td>
-                <td>{{ $post->created_at }}</td>
-                <td>{{ $post->updated_at }}</td>
+                <td>{{ $post->created_at->toFormattedDateString() }}</td>
+                <td>{{ $post->updated_at->toFormattedDateString() }}</td>
                 <td>{{ ($post->author != null) ? $post->updatedby['name'] : 'System' }}</td>
 
                 <td>
