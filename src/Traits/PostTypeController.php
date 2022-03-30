@@ -2,6 +2,8 @@
 namespace Stephendevs\Pagman\Traits;
 
 use Stephendevs\Pagman\Models\Post\Post;
+use Illuminate\Http\Request;
+
 
 
 trait PostTypeController {
@@ -29,6 +31,22 @@ trait PostTypeController {
 
         return abort(404, 'unknown post type');
     }
+
+    public function search(Request $request)
+    {
+        $data = $request->validate([
+            'what' => 'required'
+        ]);
+
+        $posts = Post::where('post_title', 'like', "%{$request->what}%")->orderBy('created_at', 'desc')->paginate(4);
+        $standard_posts = $this->standardPostTypes();
+        $custom_posts = array_keys($this->customPostTypes());
+
+        (request()->expectsJson()) ? '' : session()->flashInput($request->input());
+
+        return (request()->expectsJson()) ? response()->json($posts) : view('pagman::posts.index', compact(['posts', 'standard_posts', 'custom_posts']));
+    }
+
 
     public function create($posttype = null)
     {
@@ -117,7 +135,7 @@ trait PostTypeController {
 
     private function posts($posttype = null)
     {
-        $count = option('posts_pagination_count');
+        $count = option('posts_pagination_count', 4);
         return ($posttype) ? Post::with('author', 'menuItems', 'updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate($count) : Post::with('author', 'menuItems', 'updatedby')->orderBy('created_at', 'desc')->paginate($count);
     }
 

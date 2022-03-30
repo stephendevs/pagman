@@ -125,7 +125,7 @@
         let postExtractTextError = $(this).find('.post-extract-error');
         let featuredImageError = $(this).find('.featured-image-error');
 
-        let successMsg = $(this).find('.success');
+        let successMsg = $('#alert');
         let failedMsg = $(this).find('.error');
 
 
@@ -144,9 +144,9 @@
                     postExtractTextError.text('');
                     featuredImageError.text('');
                     failedMsg.text('');
-                    (response.message != undefined) ? $('#updated').removeClass('d-none').addClass('show').find('.message').text(response.message) : successMsg.text('');
+                    (response.message != undefined) ? successMsg.addClass('show').find('.message-holder').text(response.message) : successMsg.text('');
                     setTimeout(function(){
-                        $('#updated').removeClass('show').addClass('d-none');
+                        successMsg.removeClass('show');
                     },2000);
                 }
             },

@@ -43,11 +43,6 @@
 <section class="mt-4">
     <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-lg-12">
-                @include('pagman::core.includes.alerts.updatedresponse')
-            </div>
-        </div>
        
         <!-- Edit Post Form -->
         <form action="{{ route('pagman.posts.update', ['id' => $post->id]) }}" class="row" id="editStandardPostForm" method="POST" enctype="multipart/form-data">

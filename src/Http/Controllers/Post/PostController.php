@@ -64,11 +64,11 @@ class PostController extends Controller
         ? $post->post_featured_image = 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public')
         : '';
 
-
         $post->save();
 
         return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Updated Successfully'], 200) : back()->withInput()->with('updated', 'Post Updated Successfully');
     }
 
+   
 
 }

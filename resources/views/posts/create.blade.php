@@ -34,7 +34,7 @@
             @for ($i = 0; $i < $count; $i++)
                 <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
             @endfor
-        @endif
+         @endif
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header">Custom Posts</h6>
          @if ($count = count($custom_posts))
@@ -48,7 +48,11 @@
 @endsection
 
 @section('requiredJs')
+@if (option('use_ckeditor_cdn', true))
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+@else
 <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+@endif
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
@@ -60,14 +64,8 @@
 @section('content')
 <section class="mt-4">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                @include('pagman::core.includes.alerts.createdresponse')
-            </div>
-        </div>
         <form action="{{ route('pagman.posts.store') }}" class="row" id="createStandardPostForm" method="POST" enctype="multipart/form-data">
             @csrf
-
             <!-- Column 1 -->
             <div class="col-lg-3">
                 <div class="card shadow-sm">
@@ -83,7 +81,6 @@
                             @endif
                         </select>
                         <small class="text-danger">{{ $errors->first('post_type') }}</small>
-
                         <!-- Post Extract Text -->
                         <label for="extractText">Post Extract Text | Description</label>
                         <textarea name="extract_text" id="extractText" cols="30" rows="5" class="mt-2 form-control" placeholder="Post Extract Text">{{ old('extract_text') }}</textarea>

@@ -69,6 +69,9 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::post('/posts/edit/{id}', [PostController::class, 'update'])->name('pagman.posts.update');
         Route::get('/posts/trash/{id}', [PostController::class, 'destroy'])->name('pagman.posts.destroy');
 
+        Route::post('/posts/search', [PostController::class, 'search'])->name('pagman.posts.search');
+
+
         Route::get('/posts/posttype/{posttype?}', [PostController::class, 'index'])->name('pagman.posts.posttype');
         Route::get('/posts/posttype/{posttype?}/create', [PostController::class, 'create'])->name('pagman.posts.posttype.create');
         Route::get('/posts/show/{id}/posttype/{posttype?}', [PostController::class, 'show'])->name('pagman.posts.posttype.show');

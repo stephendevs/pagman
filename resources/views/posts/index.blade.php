@@ -54,8 +54,18 @@
 <section class="mt-4">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                @include('pagman::core.includes.alerts.deletedresponse')
+            <div class="col-lg-5 offset-lg-7 mb-1">
+                <form action="{{ route('pagman.posts.search') }}" method="POST" class="float-right">
+                    @csrf
+                    <div class="input-group">
+                        <div class="form-outline">
+                          <input type="text" id="form1" class="form-control" name="what" placeholder="Search Posts" value="{{ old('what') }}" />
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">

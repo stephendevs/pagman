@@ -5,18 +5,20 @@ namespace Stephendevs\Pagman\Models\Post;
 
 use Illuminate\Database\Eloquent\Model;
 use Stephendevs\Pagman\Traits\MenuItemTypeModel as MenuItems;
+use Stephendevs\Pagman\Traits\PostRelation;
+
 
 
 class Post extends Model
 {
-    use MenuItems;
+    use MenuItems, PostRelation;
 
 
     protected $fillable = [
         'post_key', 'post_type', 'post_title', 'post_content', 'post_featured_image', 'extract_text'
     ];
     
-    protected $with = ['author:id,name'];
+    protected $with = ['author:id,name', 'sociallinks'];
     
     public function scopedFindPost($query, $column, $value)
     {
@@ -48,6 +50,7 @@ class Post extends Model
         }
         
     }
+
     //The latest news
     public function scopeLatestNews($query, $paginate = false, $count = 4)
     {
@@ -81,23 +84,6 @@ class Post extends Model
         return $query
         ->where('post_type', 'page');
     }
-
-
-
-   public function author()
-   {
-       return $this->belongsTo('App\User');
-   }
-
-   public function updatedby()
-   {
-       return $this->belongsTo('App\User');
-   }
-
-   public function media()
-   {
-        return $this->hasMany('Stephendevs\Pagman\Models\Post\PostMedia');
-   }
 
   
 }

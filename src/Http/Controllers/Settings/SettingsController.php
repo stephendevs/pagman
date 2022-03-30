@@ -30,6 +30,7 @@ class SettingsController extends Controller
     {
         return [
             'posts_pagination_count' => 6,
+            'use_ckeditor_cdn' => 0
         ];
     }
 
@@ -37,6 +38,7 @@ class SettingsController extends Controller
     {
         return [
             'posts_pagination_count' => 'nullable',
+            'use_ckeditor_cdn' => 'nullable'
         ];
     }
 }

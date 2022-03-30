@@ -67,8 +67,8 @@ class SeedPostsCommand extends Command
         for ($i=0; $i < count($data) ; $i++) { 
             # code...
             Post::create([
-                'post_title' => (array_key_exists('post_title', $data[$i])) ?  $data[$i]['post_title'] : Str::randowm(10),
-                'post_key' => (array_key_exists('post_title', $data[$i])) ?  str_replace(' ', '-', $data[$i]['post_title']) : Str::randowm(10),
+                'post_title' => (array_key_exists('post_title', $data[$i])) ?  $data[$i]['post_title'] : Str::random(10),
+                'post_key' => (array_key_exists('post_key', $data[$i])) ?  str_replace(' ', '-', $data[$i]['post_key']) : Str::random(10),
                 'post_content' => (array_key_exists('post_content', $data[$i])) ?  $data[$i]['post_content'] : null,
                 'extract_text' => (array_key_exists('extract_text', $data[$i])) ?  $data[$i]['extract_text'] : null,
                 'post_type' => (array_key_exists('post_type', $data[$i])) ?  $data[$i]['post_type'] : 'post_type',

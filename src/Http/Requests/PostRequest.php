@@ -25,6 +25,7 @@ class PostRequest extends FormRequest
     {
         return [
             'post_title' => 'required|unique:posts,post_title',
+            'post_key' => 'nullable|unique:posts,post_key',
             'post_type' => 'required',
             'extract_text' => 'nullable|min:3|max:200',
             'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
