@@ -15,6 +15,7 @@ trait PostTypeController {
      */
     public function index($posttype = null)
     {
+
         $posts = $this->posts($posttype);
         $standard_posts = $this->standardPostTypes();
         $custom_posts = array_keys($this->customPostTypes());
@@ -124,6 +125,11 @@ trait PostTypeController {
         return array_merge([
             'post', 'page'
         ], config(config('pagman.theme', 'pagman').'.standard_post_types', []));
+    }
+
+    private function uniqueStandardPostTypes()
+    {
+        return config(config('pagman.theme', 'pagman').'.unique_standard_post_types', []);
     }
 
     private function customPostTypes()

@@ -11,16 +11,12 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
+        
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Custom Posts</h6>
-        @php
-            $custom_posts = array_keys(custom_posts_types());
-        @endphp
-        @if ($count = count($custom_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype.create', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Post' }}</a>
-            @endfor
-        @endif
+        <h6 class="dropdown-header">Pages</h6>
+        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Create Page</a>
+        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Pages</a>
+
     </div>
 </div>
 <div class="dropdown d-inline mr-5">
@@ -30,18 +26,8 @@
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-         @if ($count = count($standard_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
-            @endfor
-         @endif
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Custom Posts</h6>
-         @if ($count = count($custom_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Posts' }}</a>
-            @endfor
-        @endif
+        <h6 class="dropdown-header">Quick Access</h6>
     </div>
 </div>
 
@@ -73,14 +59,14 @@
 
                         <!-- Post Type -->
                         <label for="postType">Post Type</label>
-                        <select name="post_type" id="postType" class="form-control w-75">
+                        <select name="post_type" id="postType" class="form-control w-100 text-capitalize">
                             @if ($count = count($standard_posts))
                                 @for ($i = 0; $i < $count; $i++)
-                                    <option value="{{ $standard_posts[$i] }}">{{ $standard_posts[$i] }}</option>
+                                    <option value="{{ $standard_posts[$i] }}" {{ ($standard_posts[$i] == old('post_type') ? 'selected' : '') }}>{{ str_replace('_', ' ', $standard_posts[$i]) }}</option>
                                 @endfor
                             @endif
                         </select>
-                        <small class="text-danger">{{ $errors->first('post_type') }}</small>
+                        <small class="text-danger">{{ $errors->first('post_type') }}</small><br />
                         <!-- Post Extract Text -->
                         <label for="extractText">Post Extract Text | Description</label>
                         <textarea name="extract_text" id="extractText" cols="30" rows="5" class="mt-2 form-control" placeholder="Post Extract Text">{{ old('extract_text') }}</textarea>

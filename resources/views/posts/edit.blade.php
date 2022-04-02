@@ -54,14 +54,10 @@
 
                         <!-- Post Type -->
                         <label for="postType">Post Type</label>
-                        <select name="post_type" id="postType" class="form-control w-75">
+                        <select name="post_type" id="postType" class="form-control w-75 text-capitalize">
                             @if ($count = count($standard_posts))
                                 @for ($i = 0; $i < $count; $i++)
-                                    @if ($post->post_type == $standard_posts[$i])
-                                    <option value="{{ $standard_posts[$i] }}" selected>{{ $standard_posts[$i] }}</option>
-                                    @else
-                                    <option value="{{ $standard_posts[$i] }}">{{ $standard_posts[$i] }}</option>
-                                    @endif
+                                    <option value="{{ $standard_posts[$i] }}" {{ ($post->post_type == $standard_posts[$i]) ? 'selected' : '' }}>{{ str_replace('_', ' ', $standard_posts[$i]) }}</option>
                                 @endfor
                             @endif
                         </select>

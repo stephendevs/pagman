@@ -4,6 +4,8 @@ namespace Stephendevs\Pagman\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Stephendevs\Pagman\Rules\limitToOne;
+
 class PostRequest extends FormRequest
 {
     /**
@@ -24,9 +26,9 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'post_title' => 'required|unique:posts,post_title',
-            'post_key' => 'nullable|unique:posts,post_key',
-            'post_type' => 'required',
+            'post_title' => ['required', 'unique:posts,post_title'],
+            'post_key' => ['nullable', 'unique:posts,post_key'],
+            'post_type' => ['required', new limitToOne],
             'extract_text' => 'nullable|min:3|max:200',
             'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
         ];
@@ -36,7 +38,14 @@ class PostRequest extends FormRequest
     {
         return [
             'post_title.required' => 'Please Provide Post Title .........',
-            'post_title.unique' => 'The post with this title already exists .........',
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'post_title' => 'post title '
+        ];
+
     }
 }

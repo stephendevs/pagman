@@ -10,19 +10,9 @@
                 <i class="fa fa-folder"></i> Posts
     </a>
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
-        <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-        @if ($count = count($standard_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $standard_posts[$i]]) }}">{{ $standard_posts[$i].' Posts' }}</a>
-            @endfor
-        @endif
+        <a class="dropdown-item" href="{{ route('pagman.posts') }}">Posts</a>
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Custom Posts</h6>
-         @if ($count = count($custom_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Posts' }}</a>
-            @endfor
-        @endif
+        <h6 class="dropdown-header">Quick Access</h6>
     </div>
 </div>
 <div class="dropdown d-inline mr-5">
@@ -33,13 +23,11 @@
     <div class="dropdown-menu shadow" aria-labelledby="triggerId">
         <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
         <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Custom Posts</h6>
-        
-        @if ($count = count($custom_posts))
-            @for ($i = 0; $i < $count; $i++)
-                <a class="dropdown-item" style="text-transform: capitalize;" href="{{ route('pagman.posts.posttype.create', ['posttype' => $custom_posts[$i]]) }}">{{ $custom_posts[$i].' Post' }}</a>
-            @endfor
-        @endif
+        <h6 class="dropdown-header">Pages</h6>
+        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Create Page</a>
+        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Pages</a>
+
+       
     </div>
 </div>
 @endsection
