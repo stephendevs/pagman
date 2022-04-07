@@ -123,7 +123,7 @@ trait PostTypeController {
     {
 
         return array_merge([
-            'post', 'page'
+            'post'
         ], config(config('pagman.theme', 'pagman').'.standard_post_types', []));
     }
 
@@ -138,6 +138,8 @@ trait PostTypeController {
             'test' => 'pagman::tests'
         ], config(config('pagman.theme', 'pagman').'.custom_post_types', []));
     }
+
+    
 
     private function posts($posttype = null)
     {

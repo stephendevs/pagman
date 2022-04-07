@@ -30,7 +30,13 @@
 @endsection
 
 @section('requiredJs')
+
+@if (option('use_ckeditor_cdn', false))
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+@else
 <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+@endif
+
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
@@ -52,6 +58,8 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
 
+                        
+
                         <!-- Post Type -->
                         <label for="postType">Post Type</label>
                         <select name="post_type" id="postType" class="form-control w-75 text-capitalize">
@@ -62,6 +70,7 @@
                             @endif
                         </select>
                         <small class="text-danger">{{ $errors->first('post_type') }}</small>
+
 
                         <!-- Post Extract Text -->
                         <label for="extractText">Post Extract Text | Description</label>

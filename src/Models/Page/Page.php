@@ -9,16 +9,13 @@ use Stephendevs\Pagman\Traits\PostRelation;
 class Page extends Model
 {
     use PostRelation;
+    protected $table = 'posts';
+    protected $guarded = [];
 
-   protected $table = 'posts';
-   protected $guarded = [];
-   
-
-   protected $casts = [
+    protected $casts = [
        'is_parent' => 'boolean',
        'is_child' => 'boolean',
-       'published' => 'boolean'
-   ];
+       'published' => 'boolean'];
 
    public function scopePage($query, $key, $with = [])
    {

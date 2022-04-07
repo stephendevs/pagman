@@ -34,7 +34,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('pagman::page.create');
+        $page_keys = $this->pageKeys();
+        return view('pagman::page.create', compact(['page_keys']));
     }
 
     /**
@@ -50,7 +51,7 @@ class PageController extends Controller
 
         $post = new Post();
         $post->post_title = $request->post_title;
-        $post->post_key = str_replace(' ', '-', $request->post_title);
+        $post->post_key = ($request->post_key) ? $request->post_key : str_replace(' ', '-', $request->post_title);
         $post->extract_text = $request->extract_text;
         $post->post_content = $request->post_content;
         $post->post_type = 'page';
@@ -82,13 +83,15 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Post::findOrfail($id);
-        return view('pagman::page.edit', compact(['page']));
+        $page_keys = $this->pageKeys();
+        return view('pagman::page.edit', compact(['page', 'page_keys']));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'post_title' => 'required|unique:posts,post_title,'.$id,
+            'post_key' => 'nullable|unique:posts,post_key,'.$id,
             'extract_text' => 'nullable|min:3|max:200',
             'post_featured_image' => 'nullable|mimes:jpeg,png,jpg|max:2048'
         ]);
@@ -130,6 +133,11 @@ class PageController extends Controller
         $menus = Menu::with(['pages'])->get();
         $pages = Page::with(['menus'])->get();
         return response()->json(['pages' => $pages]);
+    }
+
+    private function pageKeys()
+    {
+        return config(config('pagman.theme', 'pagman').'.page_keys', []);
     }
 
 }

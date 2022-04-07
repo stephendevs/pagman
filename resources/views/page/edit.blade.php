@@ -9,7 +9,13 @@
 @endsection
 
 @section('requiredJs')
+
+@if (option('use_ckeditor_cdn', false))
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+@else
 <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+@endif
+
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
@@ -22,12 +28,6 @@
 <section class="mt-4">
     <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-lg-12">
-                @include('pagman::core.includes.alerts.updatedresponse')
-            </div>
-        </div>
-       
         <!-- Edit Post Form -->
         <form action="{{ route('pagman.pages.update', ['id' => $page->id]) }}" class="row" id="" method="POST" enctype="multipart/form-data">
             @csrf
@@ -36,10 +36,22 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
 
+                         <!-- Page Key -->
+                         @if (count($page_keys))
+                         <label for="pageKey">Page Key</label>
+                         <select name="post_key" id="" class="form-control">
+                             <option value="select">{{ _('Select Or Ignore') }}</option>
+                             @for ($i = 0; $i < count($page_keys); $i++)
+                                 <option value="{{ $page_keys[$i] }}" {{ ($page->post_key == $page_keys[$i]) ? 'selected' : '' }}>{{ _($page_keys[$i]) }}</option>
+                             @endfor
+                         </select>
+                        <small class="text-danger post-extract-error">{{ $errors->first('post_key') }}</small>
+                         @endif
+
                         <!-- Post Extract Text -->
                         <label for="extractText">Post Extract Text | Description</label>
                         <textarea name="extract_text" id="extractText" cols="30" rows="5" class="mt-2 form-control" placeholder="Post Extract Text">{{ (old('extract_text') != null) ? old('extract_text') : $page->extract_text  }}</textarea>
-                        <small class="text-danger post-extract-error">{{ $errors->first('extract_text') }}</small>
+                        <small class="text-danger post-key-error">{{ $errors->first('extract_text') }}</small>
                         <small>
                             Extract Text are optional hand-crafted summaries of your news content that can be used in your website
                         </small>

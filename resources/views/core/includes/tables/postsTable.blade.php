@@ -28,11 +28,7 @@
 
                 <td>
                     <a href="{{ route('pagman.posts.destroy', ['id' => $post->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                    @if (count($standard_posts))
-                    <a href="{{ (in_array($post->post_type, $standard_posts)) ? route('pagman.posts.edit', ['id' => $post->id]) : route('pagman.posts.posttype.edit', ['id' => $post->id, 'posttype' => $post->post_type]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                    @else
-                    <a href="{{ route('pagman.posts.posttype.edit', ['id' => $post->id, 'posttype' => $post->post_type]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                    @endif
+                    <a href="{{ ($post->post_type != 'page') ? route('pagman.posts.edit', ['id' => $post->id]) : route('pagman.pages.edit', ['id' => $post->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                 </td>
             </tr>
            @endforeach

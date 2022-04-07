@@ -1,1 +1,3 @@
-Listing of test post type
+{{
+    $page
+}}

@@ -13,7 +13,6 @@ use Stephendevs\Pagman\Traits\PostTypeController as MasterPostController;
 class PostController extends Controller
 {
     use MasterPostController;
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,9 +36,7 @@ class PostController extends Controller
         $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
 
         $post->save();
-
         return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Created Successfully',], 200) : back()->withInput()->with('created', 'Post Created Successfully');
-
     }
 
     public function update(Request $request, $id)

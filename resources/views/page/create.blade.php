@@ -4,11 +4,37 @@
 @section('pageHeading', 'Create Page')
 
 @section('pageActions')
-    <a href="{{ route('pagman.pages') }}" class="btn btn-sm"><i class="fa fa-fw fa-folder"></i>Pages</a>
+<div class="dropdown d-inline mr-2">
+    <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+                <i class="fa fa-plus"></i> Create Post
+    </a>
+    <div class="dropdown-menu" aria-labelledby="triggerId">
+        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Posts</a>
+    </div>
+</div>
+<div class="dropdown d-inline mr-5">
+    <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+                <i class="fa fa-folder"></i> Posts
+    </a>
+    <div class="dropdown-menu shadow" aria-labelledby="triggerId">
+        <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
+    </div>
+</div>
 @endsection
 
 @section('requiredJs')
-    <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+
+@if (option('use_ckeditor_cdn', false))
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+@else
+<script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
+@endif
+
+<script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -26,6 +52,19 @@
             <div class="col-lg-3">
                 <div class="card shadow-sm">
                     <div class="card-body">
+
+                        <!-- Page Key -->
+                        @if (count($page_keys))
+                        <label for="pageKey">Page Key</label>
+                        <select name="post_key" id="" class="form-control">
+                            <option value="select" selected>{{ _('Select Or Ignore') }}</option>
+                            @for ($i = 0; $i < count($page_keys); $i++)
+                                <option value="{{ $page_keys[$i] }}">{{ _($page_keys[$i]) }}</option>
+                            @endfor
+                        </select>
+                        <small class="text-danger post-key-error">{{ $errors->first('post_key') }}</small>
+                        @endif
+                       
 
                         <!-- Post Extract Text -->
                         <label for="extractText">Page Extract Text | Description</label>

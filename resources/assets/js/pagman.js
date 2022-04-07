@@ -165,6 +165,29 @@
 
     });
 
+    $('#iconFormat').on('change', function(){
+        let iconInput = $('#iconInput');
+        switch ($(this).val()) {
+            case 'css_class':
+                iconInput.attr('type', 'text').attr('placeholder', 'Enter CSS Class').addClass('form-control');
+                break;
+        
+            default:
+                iconInput.attr('type', 'file').removeClass('form-control');
+                break;
+        }
+    });
+
+    $('#postType').on('change', function(){
+        let postKeyInputHolder = $('#postKeyInputHolder');
+        if ($(this).val() == 'page') {
+            postKeyInputHolder.removeClass('d-none');
+        }else{
+            postKeyInputHolder.addClass('d-none');
+        }
+    });
+
+
     CKEDITOR.replace('content');
 
   

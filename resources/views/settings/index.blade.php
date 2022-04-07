@@ -66,7 +66,7 @@
                                                     Use CDN for ckeditor.
                                                     @else
                                                     <input type="checkbox" class="form-check-input" name="use_ckeditor_cdn" id="" value="1" >
-                                                    Use CDN for ckeditor.
+                                                    Use CDN for ckeditor. (Check to enable)
                                                     @endif
                                                 
                                               </label>

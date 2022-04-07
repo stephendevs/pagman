@@ -24,8 +24,8 @@
         <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
         <div class="dropdown-divider"></div>
         <h6 class="dropdown-header">Pages</h6>
-        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Create Page</a>
-        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Pages</a>
+        <a class="dropdown-item" href="{{ route('pagman.pages.create') }}">Create Page</a>
+        <a class="dropdown-item" href="{{ route('pagman.pages') }}">Pages</a>
 
        
     </div>
