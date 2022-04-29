@@ -29,6 +29,7 @@ class PostController extends Controller
         $post->extract_text = $request->extract_text;
         $post->post_content = $request->post_content;
         $post->post_type = $request->post_type;
+        $post->sp = ($request->post_type != 'post') ? '1' : '0';
         $post->author_id = auth()->user()->id;
         $post->updatedby_id = auth()->user()->id;
 
@@ -54,6 +55,7 @@ class PostController extends Controller
         $post->extract_text = $request->extract_text;
         $post->post_content = (is_array($request->post_content)) ? json_encode($request->post_content) : $request->post_content;
         $post->post_type = $request->post_type;
+        $post->sp = ($request->post_type != 'post') ? '1' : '0';
         $post->updatedby_id = auth()->user()->id;
 
         //dertermine if request has file

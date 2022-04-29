@@ -1,0 +1,17 @@
+.media-container .media-item {
+    margin-bottom: 10px
+}
+.media-container .media-item .btn.trash {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+.media-container .media-item .btn.view {
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+}
+
+.media-attached {
+    border: 4px solid var(--success);
+}

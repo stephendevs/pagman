@@ -70,6 +70,30 @@
           }
     });
 
+    $.fn.renderImage = function(options){
+
+        let defaults = {
+            'event' : 'change',
+            'placeholder' : 'img-placeholder'
+        }
+
+        let settings = $.extend(defaults, options);
+        let plugin = this;
+
+        plugin.on(settings.event, function(){
+            let reader = new FileReader;
+            reader.onload = function(e){
+                let src = e.target.result;
+                let img = $('<img>', {src: src, class : 'img-fluid'});
+                img.appendTo($('.' + settings.placeholder))
+            }
+            reader.readAsDataURL($(this)[0].files[0]);
+        });
+    }
+
+    $('.media-file').renderImage({'event' : 'change'});
+    
+
     //Create Standard Post Form
     $('#createStandardPostFor').submit(function(e){
         e.preventDefault();
@@ -164,6 +188,41 @@
            });
 
     });
+    $('#chooseMediaModal').on('shown.bs.modal', function () {
+        let chooseMediaModal = $(this);
+        let row = chooseMediaModal.find('.row');
+        let mediaColumn = $('<div>', {class : 'col-lg-4'});
+
+        let url = chooseMediaModal.data('url');
+        let baseurl = chooseMediaModal.data('baseurl');
+
+        $.ajax({
+            type : 'GET',
+            url : url,
+            dataType : 'json',
+            success : function(response){
+                let media = response.data;
+                $.each(media, function(index, value){
+                    chooseMediaModal.find('#image' + index).attr('src', baseurl + '/' + value.url).data('id', value.id);
+                });
+            }
+        });
+      });
+
+      $('.selected-media').on('click', function(){
+          let selectedMedia = $(this);
+          let url = selectedMedia.data('baseurl') + '/posts/media/add/' + selectedMedia.data('id') + '/' + selectedMedia.data('postid');
+          $.ajax({
+              type : 'GET',
+              url : url,
+              dataType : 'json',
+              success : function(response) {
+                  if (response.success != undefined && response.success == true) {
+                      selectedMedia.addClass('media-attached');
+                  }
+              }
+          });
+      });
 
     $('#iconFormat').on('change', function(){
         let iconInput = $('#iconInput');
@@ -187,8 +246,66 @@
         }
     });
 
+  $(window).on('load', function () {
+    var mediaIsotope = $('.isotope-container').isotope({
+        itemSelector: '.isotope-item'
+    });
+  });
 
-    CKEDITOR.replace('content');
+  $.fn.autocomplete = function(options){
+      // Get instance
+      let plugin = this;
+      let defaults = {
+          data : ['hello','hello']
+      };
+
+      plugin.settings = {};
+
+      plugin.init = function(){
+          //Define settings
+          plugin.settings = $.extend(plugin.settings, defaults, options);
+          // Run through the elements
+          plugin.each(function(i, wrapper){
+              let $container = autoCompleteContainer();
+              $container.insertAfter(wrapper);
+
+            plugin.on('input', function(){
+                let data = plugin.settings.data;
+                if (data.length > 0) {
+                    for (let index = 0; index < data.length; index++) {
+                        itemContainer(data[index]).appendTo($container)
+                    }
+                } else {
+                    
+                }
+            });
+          });
+      }
+
+      let autoCompleteContainer = function(){
+          let $container = $('<div>', {class: 'auto-complete-container'});
+          return $container;
+      }
+
+      let itemContainer = function(text){
+          let $item = $('<div>', {class : 'item-container'}).text(text);
+
+          $item.on('click', function(e){
+              plugin.val($(this).text());
+          });
+          return $item;
+      }
+
+      this.init();
+      return this;
+  }
+
+  $('#name').autocomplete();
+
+
+
+
+CKEDITOR.replace('content');
 
   
 })(jQuery);

@@ -2,6 +2,7 @@
 namespace Stephendevs\Pagman\Traits;
 
 use Stephendevs\Pagman\Models\Post\Post;
+use Stephendevs\Pagman\Models\Category\Category;
 use Illuminate\Http\Request;
 
 
@@ -52,13 +53,14 @@ trait PostTypeController {
     public function create($posttype = null)
     {
        $standard_posts = $this->standardPostTypes();
+       $categories = Category::all();
 
         if ($posttype == null || in_array($posttype, $this->standardPostTypes())) {
-            return (request()->expectsJson()) ? response()->json($standard_posts) : view('pagman::posts.create', compact(['standard_posts']));
+            return (request()->expectsJson()) ? response()->json($standard_posts) : view('pagman::posts.create', compact(['standard_posts', 'categories']));
         }
         if(in_array($posttype, array_keys($this->customPostTypes()))){
             $custom_post_types = $this->customPostTypes();
-            return view($custom_post_types[$posttype].'.create', compact(['standard_posts', 'custom_post_types']));
+            return view($custom_post_types[$posttype].'.create', compact(['standard_posts', 'custom_post_types', 'categories']));
         }
         return 'unknown post type';
     }
@@ -66,6 +68,7 @@ trait PostTypeController {
     public function show($id, $posttype = null)
     {
         $post = $this->post($id, $posttype);
+        
         $standard_posts = $this->standardPostTypes();
 
         if ($posttype == null || in_array($posttype, $this->standardPostTypes())) {
@@ -144,11 +147,11 @@ trait PostTypeController {
     private function posts($posttype = null)
     {
         $count = option('posts_pagination_count', 4);
-        return ($posttype) ? Post::with('author', 'menuItems', 'updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate($count) : Post::with('author', 'menuItems', 'updatedby')->orderBy('created_at', 'desc')->paginate($count);
+        return ($posttype) ? Post::with('author','updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate($count) : Post::with('author', 'menuItems', 'updatedby')->orderBy('created_at', 'desc')->paginate($count);
     }
 
     private function post($id, $posttype = null)
     {
-        return ($posttype != null) ?  Post::with('author:id,name')->where('post_type', $posttype)->findOrFail($id) :  Post::with('author:id,name')->findOrFail($id);
+        return ($posttype != null) ?  Post::with('')->where('post_type', $posttype)->findOrFail($id) :  Post::with('author:id,name')->findOrFail($id);
     }
 }

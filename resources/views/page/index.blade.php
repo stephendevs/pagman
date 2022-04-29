@@ -4,9 +4,13 @@
 @section('pageHeading', 'Pages')
 
 @section('pageActions')
-<a href="{{ route('pagman.pages.create') }}">Create Page</a>
+<div class="dropdown d-inline mr-2">
+    <a class="dropdown-toggle" href="{{ route('pagman.pages.create') }}"
+            aria-expanded="false">
+                <i class="fa fa-plus"></i> Create Page
+    </a>
+</div>
 @endsection
-
 
 
 @section('content')

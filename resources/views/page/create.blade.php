@@ -5,24 +5,16 @@
 
 @section('pageActions')
 <div class="dropdown d-inline mr-2">
-    <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+    <a class="dropdown-toggle" href="{{ route('pagman.posts.create') }}"
             aria-expanded="false">
                 <i class="fa fa-plus"></i> Create Post
     </a>
-    <div class="dropdown-menu" aria-labelledby="triggerId">
-        <a class="dropdown-item" href="{{ route('pagman.posts.create') }}">Standard Post</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Posts</a>
-    </div>
 </div>
 <div class="dropdown d-inline mr-5">
-    <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+    <a class="dropdown-toggle" aria-haspopup="true" href="{{ route('pagman.posts') }}"
             aria-expanded="false">
                 <i class="fa fa-folder"></i> Posts
     </a>
-    <div class="dropdown-menu shadow" aria-labelledby="triggerId">
-        <a class="dropdown-item" href="{{ route('pagman.posts') }}">All Posts</a>
-    </div>
 </div>
 @endsection
 

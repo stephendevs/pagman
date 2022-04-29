@@ -62,7 +62,7 @@
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     @if (array_key_exists('use_ckeditor_cdn', $options))
-                                                    <input type="checkbox" class="form-check-input" name="use_ckeditor_cdn" id="" value="{{ ($options['use_ckeditor_cdn']) ? '0' : '1' }}" {{ ($options['use_ckeditor_cdn']) ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="form-check-input" name="use_ckeditor_cdn" {{ ($options['use_ckeditor_cdn']) ? 'checked' : '' }}>
                                                     Use CDN for ckeditor.
                                                     @else
                                                     <input type="checkbox" class="form-check-input" name="use_ckeditor_cdn" id="" value="1" >

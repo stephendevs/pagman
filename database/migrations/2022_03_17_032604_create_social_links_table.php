@@ -15,12 +15,19 @@ class CreateSocialLinksTable extends Migration
     {
         Schema::create('social_links', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('platform');
             $table->text('description')->nullable();
             $table->MediumText('link');
-            $table->text('icon')->nullable();
-            $table->string('icon_format')->nullable(); //css_class, image, svg --- usefully when showing the links on the dashboard.
-            $table->nullableMorphs('owner');
+            $table->nullableMorphs('sociable');
+            $table->timestamps();
+        });
+
+        Schema::create('sociable', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('social_link_id');
+            $table->bigInteger('sociable_id');
+            $table->string('sociable_type');
+            $table->foreign('social_link_id')->references('id')->on('social_links')->onDelete('cascade');
             $table->timestamps();
         });
     }

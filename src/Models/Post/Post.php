@@ -6,19 +6,25 @@ namespace Stephendevs\Pagman\Models\Post;
 use Illuminate\Database\Eloquent\Model;
 use Stephendevs\Pagman\Traits\MenuItemTypeModel as MenuItems;
 use Stephendevs\Pagman\Traits\PostRelation;
+use Stephendevs\Pagman\Mediable;
+use Stephendevs\Pagman\Categorable;
+use Stephendevs\Pagman\Iconable;
+use Stephendevs\Pagman\Sociable;
+use Stephendevs\Pagman\Downloadable;
+use Stephendevs\Pagman\Contactable;
 
 
 
 class Post extends Model
 {
-    use MenuItems, PostRelation;
+    use MenuItems, PostRelation, Mediable, Categorable, Iconable, Sociable, Contactable;
 
 
     protected $fillable = [
         'post_key', 'post_type', 'post_title', 'post_content', 'post_featured_image', 'extract_text'
     ];
     
-    protected $with = ['author:id,name', 'sociallinks'];
+    protected $with = ['author:id,name'];
     
     public function scopedFindPost($query, $column, $value)
     {
@@ -84,6 +90,8 @@ class Post extends Model
         return $query
         ->where('post_type', 'page');
     }
+
+
 
   
 }

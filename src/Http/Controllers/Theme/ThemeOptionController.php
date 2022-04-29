@@ -22,7 +22,7 @@ class ThemeOptionController extends Controller
     protected function options() : array 
     {
         
-        $theme = config('pagman.theme', 'aamsnm');
+        $theme = theme();
         return config($theme.'.options', []);
     }
 

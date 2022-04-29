@@ -4,8 +4,29 @@
 @section('pageHeading', 'Edit Post')
 
 @section('pageActions')
+<div class="dropdown d-inline mr-3">
+    <a class="dropdown-toggle" data-toggle="modal" data-target="#chooseMediaModal" aria-expanded="false" href="hello">
+        <i class="fa fa-file"></i> Social Links
+    </a>
+</div>
+<div class="dropdown d-inline mr-3">
+    <a class="dropdown-toggle" data-toggle="modal" data-target="#chooseMediaModal" aria-expanded="false" href="hello">
+        <i class="fa fa-file"></i> Contact Details
+    </a>
+</div>
+<div class="dropdown d-inline mr-3">
+    <a class="dropdown-toggle" data-toggle="modal" data-target="#chooseMediaModal" aria-expanded="false" href="hello">
+        <i class="fa fa-file"></i> Add Downloadable File
+    </a>
+</div>
+<div class="dropdown d-inline mr-5">
+    <a class="dropdown-toggle" data-toggle="modal" data-target="#chooseMediaModal" aria-expanded="false" href="hello">
+        <i class="fa fa-camera"></i> Add Media
+    </a>
+</div>
+
 <div class="dropdown d-inline mr-2">
-    <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+     <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
                 <i class="fa fa-plus"></i> Create Post
     </a>
@@ -18,6 +39,7 @@
         <a class="dropdown-item" href="#">After divider action</a>
     </div>
 </div>
+
 <div class="dropdown d-inline mr-5">
     <a class="dropdown-toggle" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -37,6 +59,7 @@
 <script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
 @endif
 
+<script src="{{ asset('isotope/isotope.pkgd.min.js') }}" defer></script>
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
@@ -133,10 +156,78 @@
                 </div>
 
             </div>
-            <div class="col-lg-12 text-center text-success success"></div>
-            <div class="col-lg-12 text-center text-danger error"></div>
+
+            
         </form>
+
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                @if (count($post->media))
+                   <div class="card">
+                        <div class="card-header">
+                            <h6>Post Media</h6>
+                        </div>
+                       <div class="card-body">
+                            <div class="row media-container isotope-container">
+                                <div class="col-lg-3 media-item isotope-item">
+                                    <img src="{{ asset('pagman/img/post_featured_image.png') }}" alt="" class="img-fluid">
+                                </div>
+                                @foreach ($post->media as $mediaItem)
+                                    <div class="col-lg-3 media-item isotope-item">
+                                        <img src="{{ asset($mediaItem->url) }}" alt="" class="img-fluid rounded">
+                                        <a href="{{ route('pagman.media.destroy', ['id' => $mediaItem->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                @endforeach
+                            </div>
+                       </div>
+                   </div>
+                @else
+                hello
+                @endif
+            </div>
+        </div>
     </div>
 </section>
+
+
+<!-- Custom Modal -->
+<div class="modal fade" id="chooseMediaModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" data-url="{{ route('pagman.media') }}" data-baseurl="{{ url('/') }}">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose Media</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-lg-4">
+                    @for ($i = 0; $i <= 3; $i++)
+                        <img src="" alt="" id="{{ 'image'.$i }}" class="isotope-item img-fluid rounded mb-1 selected-media" data-id="" data-postid="{{$post->id }}" data-baseurl="{{ url(config('pagman.route_prefix', 'dashboard')) }}">
+                    @endfor
+                </div>
+                <div class="col-lg-4">
+                    @for ($i = 4; $i <= 7; $i++)
+                        <img src="" alt="" id="{{ 'image'.$i }}" class="isotope-item img-fluid rounded mb-1 selected-media" data-id="" data-postid="{{$post->id }}" data-baseurl="{{ url(config('pagman.route_prefix', 'dashboard')) }}">
+                    @endfor
+                </div>
+                <div class="col-lg-4">
+                    @for ($i = 8; $i <= 11; $i++)
+                        <img src="" alt="" id="{{ 'image'.$i }}" class="isotope-item img-fluid rounded mb-1 selected-media" data-id="" data-postid="{{$post->id }}" data-baseurl="{{ url(config('pagman.route_prefix', 'dashboard')) }}">
+                    @endfor
+                </div>
+                <div class="col-lg-4">
+                    <form action="" enctype="multipart/form-data">
+                        <input type="file" />
+                        <img src="{{ asset('pagman/img/post_featured_image.png') }}" alt="" class="img-fluid mt-3 selected-media">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                hello
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

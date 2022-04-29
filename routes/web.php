@@ -13,6 +13,9 @@ use Stephendevs\Pagman\Http\Controllers\Menu\MenuItemController;
 use Stephendevs\Pagman\Http\Controllers\Settings\SettingsController;
 
 use Stephendevs\Pagman\Http\Controllers\Post\PostController;
+use Stephendevs\Pagman\Http\Controllers\Post\PostMediaController;
+use Stephendevs\Pagman\Http\Controllers\Media\MediaController;
+use Stephendevs\Pagman\Http\Controllers\Category\CategoryController;
 
 use Stephendevs\Pagman\Http\Controllers\Theme\ThemeOptionController;
 use Stephendevs\Pagman\Http\Controllers\Theme\ThemeCustomizationController;
@@ -21,7 +24,7 @@ use Stephendevs\Pagman\Http\Controllers\Theme\ThemeCustomizationController;
 
 Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
-    Route::prefix(config('pagman.route_prefix', 'dashboard/theme'))->group(function(){
+    Route::prefix(config('pagman.route_prefix', 'dashboard'))->group(function(){
         
         Route::get('/sync/menuitems', [MasterController::class, 'syncMenuItems'])->name('pagman.syn.menuitems');
 
@@ -71,6 +74,9 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
         Route::post('/posts/search', [PostController::class, 'search'])->name('pagman.posts.search');
 
+        Route::get('/posts/media/add/{media_id}/{post_id}', [PostMediaController::class, 'add'])->name('pagman.posts.media.add');
+
+
 
         Route::get('/posts/posttype/{posttype?}', [PostController::class, 'index'])->name('pagman.posts.posttype');
         Route::get('/posts/posttype/{posttype?}/create', [PostController::class, 'create'])->name('pagman.posts.posttype.create');
@@ -91,7 +97,16 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
         Route::get('/cms/settings', [SettingsController::class, 'index'])->name('pagman.settings');
         Route::post('/cms/settings', [SettingsController::class, 'store'])->name('pagman.settings.update');
 
+        Route::get('/media', [MediaController::class, 'index'])->name('pagman.media');
+        Route::get('/media/create', [MediaController::class, 'create'])->name('pagman.media.create');
+        Route::post('/media/store', [MediaController::class, 'store'])->name('pagman.media.store');
+        Route::post('/media/update/{id}', [MediaController::class, 'update'])->name('pagman.media.update');
+        Route::get('/media/show/{id}', [MediaController::class, 'show'])->name('pagman.media.show');
+        Route::get('/media/destroy/{id}', [MediaController::class, 'destroy'])->name('pagman.media.destroy');
 
+        Route::get('/categories', [CategoryController::class, 'index'])->name('pagman.categories');
+        Route::post('/categories/store', [CategoryController::class, 'store'])->name('pagman.categories.store');
+        Route::get('/destroy/{id}', [CategoryController::class, 'destroy'])->name('pagman.categories.destroy');
 
 
     });

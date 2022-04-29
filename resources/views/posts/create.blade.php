@@ -1,7 +1,7 @@
 @extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
 @section('title', 'Posts | Create')
-@section('pageHeading', (request('posttype')) ? 'Posts | Create '.request('posttype').' Post' : 'Posts | Create New Post')
+@section('pageHeading', 'Create Post')
 
 @section('pageActions')
 <div class="dropdown d-inline mr-2">
@@ -27,7 +27,6 @@
         <h6 class="dropdown-header">Quick Access</h6>
     </div>
 </div>
-
 @endsection
 
 @section('requiredJs')
@@ -75,6 +74,22 @@
                         <small>
                             Extract Text are optional hand-crafted summaries of your news content that can be used in your website
                         </small>
+
+                        <hr />
+
+                        <h6 class="mb-2 text-capitalize">Categorize your post</h6>
+
+                        <!-- Post Category -->
+                        @if (count($categories))
+                            @foreach ($categories as $category)
+                                <div class="form-check {{ ($category->parent_id) ? 'ml-3' : '' }}">
+                                    <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="category[]" id="{{ 'category'.$category->id }}" value="{{ $category->id }}">
+                                    {{ $category->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

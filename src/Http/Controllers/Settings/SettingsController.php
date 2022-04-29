@@ -41,4 +41,6 @@ class SettingsController extends Controller
             'use_ckeditor_cdn' => 'nullable'
         ];
     }
+
+    
 }

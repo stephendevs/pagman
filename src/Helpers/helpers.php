@@ -68,3 +68,9 @@ if(!function_exists('pm_option')){
         return ($option) ? $option->option_value : $default;
     }
 }
+
+if(!function_exists('theme')){
+    function theme(){
+        return config('pagman.theme', 'aamsnm');
+    }
+}

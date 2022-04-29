@@ -19,7 +19,7 @@
                 <td>
                     <input type="checkbox">
                 </td>
-                <td>{{ $post->post_title }}</td>
+                <td>{{ str_limit($post->post_title, 30) }}</td>
                 <td>{{ ($post->author != null) ? $post->author['name'] : 'System' }}</td>
                 <td>{{ $post->post_type }}</td>
                 <td>{{ $post->created_at->toFormattedDateString() }}</td>

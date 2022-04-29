@@ -5,8 +5,12 @@ namespace Stephendevs\Pagman\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
+/**
+ * Artisan Commands
+ */
 use  Stephendevs\Pagman\Console\Commands\SeedPostsCommand;
 use  Stephendevs\Pagman\Console\Commands\PagmanSeederCommand;
+use  Stephendevs\Pagman\Console\Commands\DefaultCategoriesCacheCommand;
 use  Stephendevs\Pagman\Console\Commands\PagmanTheme;
 
 
@@ -43,7 +47,7 @@ class PagmanServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
             $this->commands([
-                SeedPostsCommand::class, PagmanSeederCommand::class, PagmanTheme::class,
+                SeedPostsCommand::class, PagmanSeederCommand::class, PagmanTheme::class, DefaultCategoriesCacheCommand::class
             ]);
 
             //config file

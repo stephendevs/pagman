@@ -63,6 +63,7 @@ return [
     'sidebar_navitems' => [
         'pagman::lad.sidebar.posts',
         'pagman::lad.sidebar.pages',
+        'pagman::lad.sidebar.media',
         'pagman::lad.sidebar.appearance',
     ],
     
@@ -85,7 +86,13 @@ return [
 
     'post_types' => [
         [ 'customurl', 'pagman::core.includes.posttypeviews.customurl']
+    ],
+
+    'social_platforms' => [
+        'facebook', 'twitter', 'instagram', 'youtube', 'linkedin', 'quora', 'telegram', 'whatsapp', 'pininterest', 'reddit'
     ]
+
+
 
 
 
