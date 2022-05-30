@@ -5,7 +5,8 @@
         "Laravel CMS",
         "Page manager",
         "Laravel blog manager",
-        "laravel"
+        "laravel",
+        "Content Management System"
     ],
     "homepage": "https://github.com/stephendevs/pagman",
     "type" : "project",
@@ -34,6 +35,6 @@
         }
     },
     "require": {
-        "stephendevs/lad": "^0.3.0"
+        "stephendevs/lad": "^1.0"
     }
 }

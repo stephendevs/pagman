@@ -6,62 +6,30 @@
 
 
 ### Installation
+Using Composer On fresh laravel project run `composer require stephendevs/pagman`
 ```php
-#1 Using Composer On fresh laravel project
+composer require stephendevs/pagman
 ```
+Check if `lad` has been included by running `composer show stephendevs/lad` If `lad` is included run the command `php artisan lad:install` to set it up. For a fresh install of `lad` run `php artisan lad:install --fresh`
 ```php
-require stephendevs/pagman
+composer show stephendevs/lad
+php artisan lad:install
 ```
-```php
-#2 Add PagmanServiceProvider on the package service provides array in app config file.
-```
-```php
-'providers' => [
-    /*
-     * Package Service Providers...
-     */
-    Stephendevs\Pagman\Providers\PagmanServiceProvider::class,
-],
-```
-
-### Configuration
-
-
-```php
-#1. Configure your .env file to use correct database info
-```
-```php
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=pagman
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-```php
-#2 Migrate Database Tables, Create Admin User -- Run the commands below
-```
-```php
-php artisan migrate
-php artisan create:admin --super --default
-```
-
-### Publish Assets, Configs & Views
+### Publish Assets & Configs
 
 ```php
 php artisan vendor:publish --tag=pagman-assets --force
 php artisan vendor:publish --tag=pagman-config --force
-php artisan vendor:publish --tag=pagman-views --force
 ```
 
-### Artisan Commands
+### Database Migration & Default Admin User Creation.
+With proper DB Configurations run `php artisan migrate` to the migrate you Database Tables & Create default admin user `php artisan create:admin --default`
 ```php
-php artisan options:cache
-php artisan defaultcategories:cache
+php artisan migrate
+php artisan create:admin --default
 ```
 
-
-<p><i>Still confused on how to develop laravel CSM (Pagman) website theme , Click
+---
+<p><i>Still confused on how to develop laravel CSM (Pagman) website theme (Template) , Click
 <a href="https://github.com/stephendevs/pagmanbasicthemedevelopment">here</a>
 to get started</i><p>

@@ -147,7 +147,7 @@ trait PostTypeController {
     private function posts($posttype = null)
     {
         $count = option('posts_pagination_count', 4);
-        return ($posttype) ? Post::with('author','updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate($count) : Post::with('author', 'menuItems', 'updatedby')->orderBy('created_at', 'desc')->paginate($count);
+        return ($posttype) ? Post::with('author','updatedby')->where('post_type', $posttype)->orderBy('created_at', 'desc')->paginate($count) : Post::with('author', 'updatedby')->orderBy('created_at', 'desc')->paginate($count);
     }
 
     private function post($id, $posttype = null)
