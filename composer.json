@@ -10,7 +10,7 @@
     ],
     "homepage": "https://github.com/stephendevs/pagman",
     "type" : "project",
-    "licence" : "MIT",
+    "license" : "MIT",
     "authors" : [
         {
             "name" : "Okello Stephen Omoding",
@@ -35,6 +35,7 @@
         }
     },
     "require": {
-        "stephendevs/lad": "^1.0"
+        "stephendevs/lad": "^1.0",
+        "laravel/framework": "^6.0"
     }
 }
