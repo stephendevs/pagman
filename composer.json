@@ -36,6 +36,7 @@
     },
     "require": {
         "stephendevs/lad": "^1.0",
-        "laravel/framework": "^6.0"
+        "laravel/framework": "^6.0",
+        "laravel/helpers": "1.5.0"
     }
 }

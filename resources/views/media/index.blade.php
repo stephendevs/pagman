@@ -33,7 +33,7 @@
 @endsection
 
 @section('requiredJs')
-<script src="{{ asset('isotope/isotope.pkgd.min.js') }}" defer></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js" defer></script>
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 

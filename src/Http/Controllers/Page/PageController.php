@@ -24,7 +24,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages =  Post::with('author', 'menuItems', 'updatedby')->where('post_type', 'page')->orderBy('created_at', 'desc')->paginate(5);
+        $pages =  Post::with('author', 'updatedby')->where('post_type', 'page')->orderBy('created_at', 'desc')->paginate(5);
         return view('pagman::page.index', compact(['pages']));
     }
      /**

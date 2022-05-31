@@ -16,7 +16,7 @@ class ThemeOptionController extends Controller
     public function index()
     {
         $options =  $this->getOptions();
-        return view(config('pagman.theme').'::dashboard.options.index', compact(['options']));
+        return view('dashboard.options.index', compact(['options']));
     }
 
     protected function options() : array 
