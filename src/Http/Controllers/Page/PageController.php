@@ -18,17 +18,17 @@ class PageController extends Controller
 {
     
      /**
-     * Display a listing of the resource.
+     * Display a listing of pages.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $pages =  Post::with('author', 'updatedby')->where('post_type', 'page')->orderBy('created_at', 'desc')->paginate(5);
-        return view('pagman::page.index', compact(['pages']));
+        return (request()->expectsJson()) ? response()->json($pages) : view('pagman::page.index', compact(['pages']));
     }
      /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -39,7 +39,7 @@ class PageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created page in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -64,14 +64,14 @@ class PageController extends Controller
 
         $post->save();
 
-        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Created Successfully',], 200) : back()->withInput()->with('created', 'Post Created Successfully');
+        return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Page Created Successfully',], 200) : back()->withInput()->with('created', 'Post Created Successfully');
 
     }
 
     public function show($id)
     {
         return $page = Post::with(['author'])->findOrFail($id);
-        return view('pagman::page.show', compact(['page']));
+        return (request()->expectsJson()) ? response()->json($page) : view('pagman::page.show', compact(['page']));
     }
 
      /**
@@ -124,7 +124,7 @@ class PageController extends Controller
     public function destroy($id)
     {
         Post::destroy($id);
-        return back()->with('deleted', 'Page deleted successfully');
+        return (request()->expectsJson()) ? response()->json(['message' => 'Page deleted successfully']) : back()->with('deleted', 'Page deleted successfully');
     }
 
 

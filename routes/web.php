@@ -26,33 +26,8 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
     Route::prefix(config('pagman.route_prefix', 'dashboard'))->group(function(){
         
-        Route::get('/sync/menuitems', [MasterController::class, 'syncMenuItems'])->name('pagman.syn.menuitems');
 
-
-        Route::get('/menus', [MenuController::class, 'index'])->name('pagman.menus');
-
-        Route::post('/menu/create', [MenuController::class, 'store'])->name('pagman.menus.store');
-        Route::get('/menus/{id}', [MenuController::class, 'show'])->name('pagman.menus.show');
-
-        Route::post('/menuitem/create/{id}', [MenuItemController::class, 'store'])->name('pagman.menuitem.create');
-        Route::get('/menuitem/delete/{id}', [MenuItemController::class, 'destroy'])->name('pagman.menuitem.destroy');
-
-        //Route::get('/themes', [MenuController::class, 'show'])->name('pagman.themes');
-        //Route::get('/theme/{name}', [MenuController::class, 'show'])->name('pagman.theme');
-       // Route::get('/theme/{name}/customize', [MenuController::class, 'show'])->name('pagman.theme.customize');
-
-        Route::get('/menus/menuitem/remove/{pivot_id}', [MenuItemController::class, 'remove'])->name('pagman.menus.menuitem.remove');
-
-        Route::get('/menus/ajax', [MenuController::class, 'indexAjax'])->name('lpageMenusAjax');
-        Route::get('/menu/create', [MenuController::class, 'index'])->name('lpageMenuCreate');
-        Route::get('/menu/show/{id}', [MenuController::class, 'show'])->name('lpageMenuShow');
-        Route::get('/menu/edit/{id}', [MenuController::class, 'edit'])->name('lpageMenuEdit');
-        Route::post('/menu/update/{id}', [MenuController::class, 'update'])->name('lpageMenuUpdate');
-        Route::get('/menu/delete/{id}', [MenuController::class, 'destroy'])->name('lpageMenuDestroy');
-
-        Route::get('/pages/menu', [PageController::class, 'menu']);
         Route::get('/pages', [PageController::class, 'index'])->name('pagman.pages');
-
         Route::get('/pages/create', [PageController::class, 'create'])->name('pagman.pages.create');
         Route::post('/pages/store', [PageController::class, 'store'])->name('pagman.pages.store');
         Route::get('/pages/show/{id}', [PageController::class, 'show'])->name('pagman.pages.show');
@@ -112,3 +87,41 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
     });
 
 });
+
+Route::group(['prefix' => 'api'], function(){
+    Route::group(['prefix' => config('lad.route_prefix', 'dashboard')], function(){
+ 
+        Route::group(['middleware' => ['api','auth:api']], function(){
+
+            Route::get('/pages', [PageController::class, 'index']);
+            Route::post('/pages/store', [PageController::class, 'store']);
+            Route::get('/pages/show/{id}', [PageController::class, 'show']);
+            Route::post('/pages/update/{id}', [PageController::class, 'update']);
+            Route::get('/pages/destroy/{id}', [PageController::class, 'destroy']);
+
+            Route::get('/posts', [PostController::class, 'index']);
+            Route::post('/posts/create', [PostController::class, 'store']);
+            Route::get('/posts/show/{id}', [PostController::class, 'show']);
+            Route::get('/posts/edit/{id}', [PostController::class, 'edit']);
+            Route::post('/posts/edit/{id}', [PostController::class, 'update']);
+            Route::get('/posts/trash/{id}', [PostController::class, 'destroy']);
+    
+            Route::post('/posts/search', [PostController::class, 'search']);
+
+            Route::get('/media', [MediaController::class, 'index']);
+            Route::post('/media/store', [MediaController::class, 'store']);
+            Route::post('/media/update/{id}', [MediaController::class, 'update']);
+            Route::get('/media/show/{id}', [MediaController::class, 'show']);
+            Route::get('/media/destroy/{id}', [MediaController::class, 'destroy']);
+
+            /**Categories Api Routes */
+            Route::get('/categories', [CategoryController::class, 'index']);
+            Route::post('/categories/store', [CategoryController::class, 'store']);
+            Route::get('/categories/show/{id}', [CategoryController::class, 'show']);
+            Route::post('/categories/update/{id}', [CategoryController::class, 'update']);
+            Route::get('/categories/destroy/{id}', [CategoryController::class, 'destroy']);
+
+        });
+ 
+    });
+ });
