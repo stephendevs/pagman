@@ -37,6 +37,7 @@ class PostController extends Controller
         $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
 
         $post->save();
+        
         return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Created Successfully',], 200) : back()->withInput()->with('created', 'Post Created Successfully');
     }
 
@@ -64,7 +65,7 @@ class PostController extends Controller
         : '';
 
         $post->save();
-
+        $post->categories()->sync($request->category);
         return ($request->expectsJson()) ? response()->json(['success' => true,'message' => 'Post Updated Successfully'], 200) : back()->withInput()->with('updated', 'Post Updated Successfully');
     }
 

@@ -81,6 +81,9 @@ Route::middleware(config('pagman.middlewares', 'web'))->group(function () {
 
         Route::get('/categories', [CategoryController::class, 'index'])->name('pagman.categories');
         Route::post('/categories/store', [CategoryController::class, 'store'])->name('pagman.categories.store');
+        Route::get('/categories/show/{id}', [CategoryController::class, 'show'])->name('pagman.categories.show');
+        Route::get('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('pagman.categories.edit');
+        Route::post('/categories/edit/{id}', [CategoryController::class, 'update'])->name('pagman.categories.update');
         Route::get('/destroy/{id}', [CategoryController::class, 'destroy'])->name('pagman.categories.destroy');
 
 

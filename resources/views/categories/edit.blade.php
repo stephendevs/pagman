@@ -51,44 +51,10 @@
             <div class="col-lg-9">
                 <div class="card">
                     <div class="card-body">
-                        @if (count($categories))
-                            <table class="table table-borderless table-inverse table-responsive">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Posts</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($categories as $category)
-                                            <tr>
-                                                <td scope="row">{{ $category->name }}</td>
-                                                <td>{{ ($category->description) ? $category->description : 'No description' }}</td>
-                                                <td>{{ $category->posts_count }}</td>
-                                                <td>
-                                                    <a href="{{ route('pagman.categories.destroy', ['id' => $category->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                                                    <a href="{{ route('pagman.categories.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-                                    </tbody>
-                            </table>
-                        @else
-                            
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <form action="{{route('pagman.categories.store')}}" method="POST" autocomplete="off" id="createCategoryForm">
+                        <form action="{{route('pagman.categories.update', ['id' => $category->id])}}" method="POST" autocomplete="off" id="">
                             @csrf
                             <label for="name">Category Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Category Name" value="{{ old('name') }}" id="name" />
+                            <input type="text" name="name" class="form-control" placeholder="Category Name" value="{{ (old('name')) ? old('name') : $category->name }}" id="name" />
                             <small class="text-danger">{{ $errors->first('name') }}</small>
                             <label for="description">Description</label>
                             <textarea name="description" id="description" cols="30" rows="5" class="form-control">{{ old('description') }}</textarea>
@@ -102,7 +68,7 @@
                                     @endforeach
                                 @endif
                             </select>
-                            <button type="submit" class="btn btn-md btn-primary float-right mt-2">Save</button>
+                            <button type="submit" class="btn btn-md btn-primary float-right mt-2">Update</button>
                         </form>
                     </div>
                 </div>

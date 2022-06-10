@@ -93,15 +93,16 @@ trait PostTypeController {
     public function edit($id, $posttype = null)
     {
         $post = $this->post($id, $posttype);
+        $categories = Category::all();
         $standard_posts = $this->standardPostTypes();
 
         if ($posttype == null || in_array($posttype, $this->standardPostTypes())) {
-            return (request()->expectsJson()) ? response()->json($post, $standard_posts) : view('pagman::posts.edit', compact(['standard_posts', 'post']));
+            return (request()->expectsJson()) ? response()->json($post, $standard_posts) : view('pagman::posts.edit', compact(['standard_posts', 'post','categories']));
         }
 
         if(in_array($posttype, array_keys($this->customPostTypes()))){
             $custom_post_types = $this->customPostTypes();
-            return view($custom_post_types[$posttype].'.edit', compact(['post', 'standard_posts']));
+            return view($custom_post_types[$posttype].'.edit', compact(['post', 'standard_posts', 'categories']));
         }
 
         return 'unknown post type';

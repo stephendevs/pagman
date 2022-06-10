@@ -12,14 +12,15 @@ use Stephendevs\Pagman\Models\Media\Media;
 class Category extends Model
 {
 
+
     public function posts()
     {
-        return $this->morphByMany(Post::class, 'categorable');
+        return $this->morphedByMany(Post::class, 'categorable');
     }
 
     public function media()
     {
-        return $this->morphByMany(Media::class, 'categorable');
+        return $this->morphByMany(Media::class, 'mediable');
     }
   
 }

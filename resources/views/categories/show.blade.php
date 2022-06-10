@@ -1,7 +1,7 @@
 @extends(config('pagman.layout', 'pagman::core.layouts.master'))
 
-@section('title', 'Media')
-@section('pageHeading', 'Media Details')
+@section('title', 'Category')
+@section('pageHeading', 'Category Details')
 
 @section('pageActions')
 <div class="dropdown d-inline mr-2">
@@ -32,11 +32,6 @@
 </div>
 @endsection
 
-@section('requiredJs')
-<script src="{{ asset('isotope/isotope.pkgd.min.js') }}" defer></script>
-<script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
-@endsection
-
 @section('requiredCss')
 <link href="{{ asset('pagman/css/pagman.css') }}" rel="stylesheet">
 @endsection
@@ -49,42 +44,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-5 offset-lg-7 mb-1">
-                <form action="{{ route('pagman.posts.search') }}" method="POST" class="float-right">
-                    @csrf
-                    <div class="input-group">
-                        <div class="form-outline">
-                          <input type="text" id="form1" class="form-control" name="what" placeholder="Search Posts" value="{{ old('what') }}" />
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-primary">
-                          <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
         <div class="row">
-
-            <!-- filter search posts select posts -->
-            <!-- Posts Table -->
-           
-            <div class="col-lg-6">
-               <img src="{{ asset($mediaItem->url) }}" alt="{{ ($mediaItem->description) ?? 'No description indicated' }}" class="img-fluid">
-            </div>
-            <div class="col-lg-3">
-               <div class="card">
-                   <div class="card-body">
-                       <a href="{{ route('pagman.media.destroy', ['id' => $mediaItem->id]) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                       <hr />
-                       <p>Media Type : <b>{{ \File::extension($mediaItem->url) }}</b></p><hr />
-                       <p>Uploaded : <b>{{ $mediaItem->created_at }}</b></p><hr />
-                       <form action="{{ route('pagman.media.update', ['id' => $mediaItem->id]) }}" method="POST">
-                           @csrf
-                           <textarea name="description" id="" cols="30" rows="5" class="form-control" placeholder="Alt Text">{{ ($mediaItem->description) ?? '' }}</textarea>
-                           <button type="submit" class="btn btn-sm btn-primary mt-2 float-right">Update</button>
-                       </form>
-                   </div>
-               </div>
-            </div>
+            
         </div>
     </div>
 </section>

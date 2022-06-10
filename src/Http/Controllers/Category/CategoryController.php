@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::withCount(['posts'])->get();
         return (request()->expectsJson()) ? response()->json($categories) : view('pagman::categories.index', compact(['categories']));
     }
      /**
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = Category::findOrFail($id);
-        return (request()->expectsJson()) ? response()->json($category) : view('pagman::page.show', compact(['category']));
+        return (request()->expectsJson()) ? response()->json($category) : view('pagman::categories.show', compact(['category']));
     }
 
      /**
@@ -69,15 +69,15 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $page = Post::findOrfail($id);
-        $page_keys = $this->pageKeys();
-        return view('pagman::page.edit', compact(['page', 'page_keys']));
+        $category = Category::findOrFail($id);
+        $categories = Category::all();
+        return view('pagman::categories.edit', compact(['category', 'categories']));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:posts,post_title,'.$id,
+            'name' => 'required|unique:categories,ponamest_title,'.$id,
             'description' => 'nullable',
             'parent' => 'nullable'
         ]);
