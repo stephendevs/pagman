@@ -153,6 +153,6 @@ trait PostTypeController {
 
     private function post($id, $posttype = null)
     {
-        return ($posttype != null) ?  Post::with('')->where('post_type', $posttype)->findOrFail($id) :  Post::with('author:id,name')->findOrFail($id);
+        return ($posttype != null) ?  Post::with(['icon'])->where('post_type', $posttype)->findOrFail($id) :  Post::with(['author:id,name','icon'])->findOrFail($id);
     }
 }

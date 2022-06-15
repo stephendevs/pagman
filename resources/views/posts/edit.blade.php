@@ -103,7 +103,6 @@
                             Extract Text are optional hand-crafted summaries of your news content that can be used in your website
                         </small>
                         <hr />
-
                         <h6 class="mb-2 text-capitalize">Categorize your post</h6>
                         @if (count($post->categories))
                             @php
@@ -160,6 +159,7 @@
 
             <div class="col-lg-3">
 
+
                 <!-- Post Featured Image -->
                 <div class="card shadow-sm mb-3">
                     <div class="card-header">
@@ -181,6 +181,30 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Post Icon - posts may have icons or not -->
+                @if (option('asign_icons_to_posts', true))
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <h6>Post Icon</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-lg-6">
+                                    <input type="file" name="post_icon" class="" id="iconInput"  />
+                                </div>
+                                <div class="col-lg-6">
+                                    <select name="icon_format" id="iconFormat" class="form-control d-none">
+                                        <option value="img" selected>Image</option>
+                                        <option value="css_class">CSS Class</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <img src="{{ ($post->icon) ? asset($post->icon->icon) : asset('pagman/img/post_featured_image.png') }}" alt="" id="iconImageHolderId" class="w-25">
+
+                        </div>
+                    </div>
+                @endif
 
                 <!-- Submit Button -->
                 <div class="card shadow-sm">

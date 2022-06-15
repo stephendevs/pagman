@@ -30,13 +30,7 @@
 @endsection
 
 @section('requiredJs')
-
-@if (option('use_ckeditor_cdn', false))
 <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-@else
-<script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
-@endif
-
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 
@@ -133,7 +127,7 @@
                 </div>
 
                 <!-- Post Icon - posts may have icons or not -->
-                @if (option('asign_icons_to_posts', false))
+                @if (option('asign_icons_to_posts', true))
                     <div class="card shadow-sm mb-3">
                         <div class="card-header">
                             <h6>Post Icon</h6>
@@ -144,13 +138,13 @@
                                     <input type="file" name="post_icon" class="" id="iconInput"  />
                                 </div>
                                 <div class="col-lg-6">
-                                    <select name="icon_format" id="iconFormat" class="form-control">
+                                    <select name="icon_format" id="iconFormat" class="form-control d-none">
                                         <option value="img" selected>Image</option>
                                         <option value="css_class">CSS Class</option>
                                     </select>
                                 </div>
                             </div>
-                            <img src="{{ asset('pagman/img/post_featured_image.png') }}" alt="" id="imageHolderId" class="w-25">
+                            <img src="{{ asset('pagman/img/post_featured_image.png') }}" alt="" id="iconImageHolderId" class="w-25">
                         </div>
                     </div>
                 @endif

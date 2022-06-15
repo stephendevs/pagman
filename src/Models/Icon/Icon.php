@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Icon extends Model
 {
+    protected $guarded = [];
 
    public function iconable()
    {
