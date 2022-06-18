@@ -42,7 +42,7 @@ return [
     | The template_type_modular by default is asured to be modular --> true.
     |--------------------------------------------------------------------------
     */
-    'theme' => env('PAGMAN_THEME', 'aamsnm'),
+    'theme' => env('PAGMAN_THEME', '2010'),
     
 
     'template_type_modular' => true,

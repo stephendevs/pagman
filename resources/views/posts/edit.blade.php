@@ -52,13 +52,7 @@
 @endsection
 
 @section('requiredJs')
-
-@if (option('use_ckeditor_cdn', false))
 <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-@else
-<script src="{{ asset('ckeditor/ckeditor.js') }}" defer></script>
-@endif
-
 <script src="{{ asset('isotope/isotope.pkgd.min.js') }}" defer></script>
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection

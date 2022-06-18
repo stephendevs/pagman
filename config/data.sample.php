@@ -13,7 +13,8 @@ return [
             'extract_text' => 'extract text',
             'post_name' => 'post name here',
             'post_content' => 'post content here',
-            'post_featured_image' => 'featured image url'
+            'post_featured_image' => 'featured image url',
+            'post_icon' => 'the post icons'
         ]
     ]
 

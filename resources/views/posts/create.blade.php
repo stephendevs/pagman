@@ -30,7 +30,7 @@
 @endsection
 
 @section('requiredJs')
-<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js" defer></script>
 <script src="{{ asset('pagman/js/pagman.js') }}" defer></script>
 @endsection
 

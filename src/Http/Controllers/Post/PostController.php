@@ -33,11 +33,12 @@ class PostController extends Controller
         $post->author_id = auth()->user()->id;
         $post->updatedby_id = auth()->user()->id;
 
-        //dertermine if request has file
+        # Dertermine if request has file (post featured image)
         $post->post_featured_image = ($request->hasFile('post_featured_image')) ? 'storage/'.request()->post_featured_image->store(config('pagman.media_dir', 'media/featuredimages'), 'public') : null;
 
         $post->save();
-        //check if request has icon
+        
+        # Check if request has icon
         if($request->hasFile('post_icon')){
             $post->icon()->create([
                 'icon' => 'storage/'.request()->post_icon->store(config('pagman.media_dir', 'media'), 'public')

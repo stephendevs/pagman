@@ -80,7 +80,7 @@ class PagmanServiceProvider extends ServiceProvider
         }
 
         View::composer(
-            'pagman::web.menu.bootstrapmenuitems', 'Stephendevs\Pagman\Http\Composers\MenuItemsComposer'
+            'pagman::index', 'Stephendevs\Pagman\Http\Composers\DashboardComposer'
         );
 
         
